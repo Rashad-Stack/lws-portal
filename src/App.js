@@ -1,7 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AuthLoading from "./components/ui/authLoading";
 import useAuthCheck from "./hooks/useAuthCheck";
-import { Home, StudentLogin, StudentRegistration } from "./pages/StudentPortal";
+import {
+  CoursePlayer,
+  Home,
+  StudentLogin,
+  StudentRegistration,
+} from "./pages/StudentPortal";
 import PrivetRouter from "./routes/PrivetRouter";
 import PublicRouter from "./routes/PublicRouter";
 
@@ -13,7 +18,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<PrivetRouter />}>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<CoursePlayer />} />
         </Route>
         <Route path="/" element={<PublicRouter />}>
           <Route path="/student/login" element={<StudentLogin />} />

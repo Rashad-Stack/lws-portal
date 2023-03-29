@@ -1,5 +1,6 @@
 import React from "react";
+import { Layout } from "../../components/ui";
 
 export default function Home() {
-  return <div>Home</div>;
+  return <Layout></Layout>;
 }

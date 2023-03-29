@@ -25,7 +25,7 @@ export const authApi = apiSlice.injectEndpoints({
           return {
             url: "/users",
             method: "POST",
-            body: data,
+            body: { ...data, role: "student" },
           };
         },
         async onQueryStarted(data, { queryFulfilled, dispatch }) {

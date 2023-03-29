@@ -14,7 +14,8 @@ export default function RegistrationForm() {
       initialValues,
       validationSchema: registerSchema,
       onSubmit(values, action) {
-        register(values);
+        const { name, email, password } = values;
+        register({ name, email, password });
         if (isSuccess) {
           action.resetForm();
         }

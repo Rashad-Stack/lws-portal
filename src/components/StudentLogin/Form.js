@@ -49,7 +49,7 @@ export default function Form() {
           <input
             id="password"
             name="password"
-            type="tel"
+            type="password"
             autoComplete="current-password"
             className="login-input rounded-b-md"
             placeholder="Password"
