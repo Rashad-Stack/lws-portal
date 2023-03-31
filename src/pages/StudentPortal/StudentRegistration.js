@@ -3,6 +3,7 @@ import RegistrationForm from "../../components/StudentRegister/RegistrationForm"
 import { FormHeader, FormLayout } from "../../components/ui";
 export default function StudentRegistration() {
   useEffect(() => {
+    // Setting page title
     document.title = "LWS | Student Registration";
   }, []);
 

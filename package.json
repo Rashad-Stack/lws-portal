@@ -10,11 +10,10 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
-    "eslint": "^8.36.0",
     "formik": "^2.2.9",
-    "prettier": "^2.8.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-modal": "^3.16.1",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "yup": "^1.0.2"
@@ -24,8 +23,15 @@
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.14",
+    "eslint": "^8.37.0",
+    "eslint-plugin-react": "^7.32.2",
     "postcss": "^8.4.21",
+    "prettier": "^2.8.7",
     "tailwindcss": "^3.2.7",
     "vite": "^4.2.0"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/Learn-with-Sumit/batch-2---final-exam---edtech-platform-Rashad-Stack.git",
+  "author": "Rashad-Stack <tex.eng.rashed@gmail.com>",
+  "license": "MIT"
 }

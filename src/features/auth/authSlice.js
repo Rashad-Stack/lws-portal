@@ -16,6 +16,7 @@ const authSlice = createSlice({
     userLoggedOut(state) {
       state.jwt = undefined;
       state.user = undefined;
+      localStorage.clear("auth");
     },
   },
 });

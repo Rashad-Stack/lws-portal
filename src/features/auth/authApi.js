@@ -1,6 +1,5 @@
 import { setToLocal } from "../../utils";
 import apiSlice from "../api/apiSlice";
-import { userLoggedIn } from "./authSlice";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints(builder) {
@@ -16,8 +15,12 @@ export const authApi = apiSlice.injectEndpoints({
         async onQueryStarted(data, { queryFulfilled, dispatch }) {
           try {
             const result = await queryFulfilled;
+
+            // Set access token and logged user in to local storage.
             setToLocal(result?.data, dispatch);
-          } catch (err) {}
+          } catch (err) {
+            // Do nothing
+          }
         },
       }),
       register: builder.mutation({
@@ -31,24 +34,12 @@ export const authApi = apiSlice.injectEndpoints({
         async onQueryStarted(data, { queryFulfilled, dispatch }) {
           try {
             const result = await queryFulfilled;
+
+            // Set access token and logged user in to local storage.
             setToLocal(result?.data, dispatch);
-            // if (result?.data) {
-            //   const { accessToken, user } = result?.data;
-            //   localStorage.setItem(
-            //     "auth",
-            //     JSON.stringify({
-            //       jwt: accessToken,
-            //       user,
-            //     })
-            //   );
-            //   dispatch(
-            //     userLoggedIn({
-            //       jwt: accessToken,
-            //       user,
-            //     })
-            //   );
-            // }
-          } catch (err) {}
+          } catch (err) {
+            // Do nothing
+          }
         },
       }),
     };

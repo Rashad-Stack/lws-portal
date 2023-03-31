@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
+
 import { useGetCoursesQuery } from "../../features/courses/coursesApi";
 import ErrorMessage from "../ui/ErrorMessage";
 import Loader from "../ui/Loader";
@@ -6,10 +7,6 @@ import ListItem from "./ListItem";
 
 export default function VideoList() {
   const { data: courses, isLoading, isError } = useGetCoursesQuery();
-
-  useEffect(() => {
-    document.title = "LWS | Courses";
-  }, []);
 
   // Decide what to render
   let content = null;

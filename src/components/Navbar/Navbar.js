@@ -13,7 +13,7 @@ export default function Navbar() {
       <div className="max-w-7xl px-5 lg:px-0 mx-auto flex justify-between py-3">
         <img className="h-10" src={brandImage} />
         <div className="flex items-center gap-3">
-          <Link to="/Leaderboard">Leaderboard</Link>
+          <Link to="/leaderboard">Leaderboard</Link>
           <h2 className="font-bold">{user?.name}</h2>
           <Logout />
         </div>

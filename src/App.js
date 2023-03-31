@@ -1,9 +1,11 @@
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AuthLoading from "./components/ui/authLoading";
 import useAuthCheck from "./hooks/useAuthCheck";
 import {
   CoursePlayer,
-  Home,
+  LeaderBoard,
+  Quiz,
   StudentLogin,
   StudentRegistration,
 } from "./pages/StudentPortal";
@@ -19,6 +21,8 @@ function App() {
       <Routes>
         <Route path="/" element={<PrivetRouter />}>
           <Route path="/" element={<CoursePlayer />} />
+          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/leaderboard" element={<LeaderBoard />} />
         </Route>
         <Route path="/" element={<PublicRouter />}>
           <Route path="/student/login" element={<StudentLogin />} />

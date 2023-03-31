@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+
 import { useGetVideoQuery } from "../../features/courses/coursesApi";
 import { courseIdSelector } from "../../features/courses/courseSlice";
 import ErrorMessage from "../ui/ErrorMessage";
@@ -13,6 +14,7 @@ export default function Player() {
 
   return (
     <div className="col-span-full w-full space-y-8 lg:col-span-2">
+      {/* Handling Loading and error state */}
       {isLoading && <Loader />}
       {!isLoading && isError && (
         <ErrorMessage message="Something went wrong!" />
@@ -22,6 +24,7 @@ export default function Player() {
         <ErrorMessage message="No video found!" />
       )}
       {!isLoading && !isError && video?.id && (
+        // Rendering data throw component
         <>
           <iframe
             width="100%"

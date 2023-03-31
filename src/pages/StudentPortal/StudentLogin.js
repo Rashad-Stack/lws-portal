@@ -4,6 +4,7 @@ import { FormHeader, FormLayout } from "../../components/ui";
 
 export default function StudentLogin() {
   useEffect(() => {
+    // Setting page title
     document.title = "LWS | Student Login";
   }, []);
   return (
