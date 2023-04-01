@@ -11,7 +11,9 @@ export default function Navbar() {
   return (
     <nav className="shadow-md">
       <div className="max-w-7xl px-5 lg:px-0 mx-auto flex justify-between py-3">
-        <img className="h-10" src={brandImage} />
+        <Link to="/">
+          <img className="h-10" src={brandImage} />
+        </Link>
         <div className="flex items-center gap-3">
           <Link to="/leaderboard">Leaderboard</Link>
           <h2 className="font-bold">{user?.name}</h2>

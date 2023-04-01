@@ -12,11 +12,12 @@ export default function CoursePlayer() {
     <Layout>
       <section className="py-6 bg-primary">
         <div className="mx-auto max-w-7xl px-5 lg:px-0">
-          <div className="grid grid-cols-3 gap-2 lg:gap-8"></div>
-          {/* Video player component */}
-          <Player />
-          {/* Video list component */}
-          <VideoList />
+          <div className="grid grid-cols-3 gap-2 lg:gap-8">
+            {/* Video player component */}
+            <Player />
+            {/* Video list component */}
+            <VideoList />
+          </div>
         </div>
       </section>
     </Layout>
