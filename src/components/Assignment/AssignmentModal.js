@@ -37,8 +37,6 @@ export default function AssignmentModal({ setIsOpen }) {
     }
   };
 
-  console.log(assignment, courseId);
-
   useEffect(() => {
     if (isSuccess) {
       setIsOpen(false);
