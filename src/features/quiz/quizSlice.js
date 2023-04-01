@@ -52,16 +52,20 @@ const quizSlice = createSlice({
           if (option?.isCorrect) {
             correctIndexes.push(index2);
           }
+
           // Checking user selected option
           if (state.quizzes[index1]?.options[index2]?.checked) {
             checkIndexes.push(index2);
           }
         });
+
         // Check equality of two array
         if (_.isEqual(correctIndexes, checkIndexes)) {
           state.correctQuiz.push(state.quizzes[index1]?.options[checkIndexes]);
         }
       });
+
+      // Set calculated mark to state
       state.quizMark = {
         student_id: id,
         student_name: name,

@@ -12,7 +12,7 @@ const apiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: [],
+  tagTypes: ["GetOneQuiz", "GetOneAssignment"],
   endpoints() {
     return {};
   },

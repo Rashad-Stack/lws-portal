@@ -4,3 +4,4 @@ export { default as FormLayout } from "./FormLayout";
 export { default as ErrorMessage } from "./ErrorMessage";
 export { default as Loader } from "./Loader";
 export { default as Layout } from "./Layout";
+export { default as ActionAlert } from "./ActionAlert";

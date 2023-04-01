@@ -24,8 +24,41 @@ const quizApi = apiSlice.injectEndpoints({
           }
         },
       }),
+      postQuizMark: builder.mutation({
+        query(data) {
+          return {
+            url: "/quizMark",
+            method: "POST",
+            body: data,
+          };
+        },
+
+        invalidatesTags: ["GetOneQuiz"],
+      }),
+      getQuizMark: builder.query({
+        query() {
+          return {
+            url: "/quizMark",
+            method: "GET",
+          };
+        },
+      }),
+      getOneQuizMark: builder.query({
+        query({ courseId, studentId }) {
+          return {
+            url: `/quizMark?student_id=${studentId}&video_id=${courseId}`,
+            method: "GET",
+          };
+        },
+        providesTags: ["GetOneQuiz"],
+      }),
     };
   },
 });
 
-export const { useGetQuizQuery } = quizApi;
+export const {
+  useGetQuizQuery,
+  usePostQuizMarkMutation,
+  useLazyGetQuizMarkQuery,
+  useGetOneQuizMarkQuery,
+} = quizApi;

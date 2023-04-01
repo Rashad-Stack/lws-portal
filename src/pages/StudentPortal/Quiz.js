@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Modal from "react-modal";
 
 import Question from "../../components/Quiz/Question";
-import { ErrorMessage, Layout, Loader } from "../../components/ui";
+import { ActionAlert, ErrorMessage, Layout, Loader } from "../../components/ui";
 import { authSelector } from "../../features/auth/authSlice";
 import { courseIdSelector } from "../../features/courses/courseSlice";
 import { useGetQuizQuery } from "../../features/quiz/quizApi";
@@ -16,6 +17,7 @@ export default function Quiz() {
   const { user } = useSelector(authSelector);
   const { data: quiz, isLoading, isError } = useGetQuizQuery(courseId);
   const { quizzes } = useSelector(quizzesSelector);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -23,6 +25,7 @@ export default function Quiz() {
     event.preventDefault();
     // Dispatching raw quiz data for getting Quiz result
     dispatch(calculateQuizMark({ quiz, user }));
+    setIsOpen(true);
   };
 
   useEffect(() => {
@@ -67,6 +70,30 @@ export default function Quiz() {
           </>
         )}
       </div>
+      <Modal isOpen={modalIsOpen} style={customStyles} ariaHideApp={false}>
+        <ActionAlert setIsOpen={setIsOpen} />
+      </Modal>
     </Layout>
   );
 }
+
+// styling for modal
+const customStyles = {
+  content: {
+    width: "100%",
+    height: "100%",
+    top: "50%",
+    left: "50%",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "transparent",
+  },
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(000, 000, 000, 0.75)",
+  },
+};
