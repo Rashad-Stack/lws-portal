@@ -7,7 +7,7 @@ export default function AddVideoModal({
   modalTitle,
   setIsOpen,
   isEditing,
-  video = {},
+  tableData = {},
 }) {
   const {
     addVideo,
@@ -23,7 +23,7 @@ export default function AddVideoModal({
     url: initialUrl,
     views: initialViews,
     duration: initialDuration,
-  } = video;
+  } = tableData;
 
   const [title, setTitle] = useState(initialTitle || "");
   const [description, setDescription] = useState(initialDescription || "");
@@ -66,48 +66,50 @@ export default function AddVideoModal({
     >
       <div className="bg-gray-800 px-16 py-14 rounded-md">
         <h1 className="text-xl mb-4 font-bold text-slate-100">{modalTitle}</h1>
+
+        <div className="w-full max-w-xs">
+          <InputBox
+            required={true}
+            title="Enter title"
+            value={title}
+            setValue={setTitle}
+          />
+
+          <InputBox
+            required={true}
+            title="Enter description"
+            value={description}
+            setValue={setDescription}
+          />
+
+          <InputBox
+            required={true}
+            title="Enter video url"
+            value={url}
+            setValue={setUrl}
+          />
+
+          <InputBox
+            required={true}
+            title="Enter views"
+            value={views}
+            setValue={setViews}
+          />
+
+          <InputBox
+            required={true}
+            title="Enter duration"
+            value={duration}
+            setValue={setDuration}
+          />
+        </div>
         {!videoManageIsLoading && videoManageIsError && (
-          <ErrorMessage message="Something went wrong!" />
+          <ErrorMessage
+            message={
+              isEditing ? "Failed to update video!" : "Failed to add video!"
+            }
+          />
         )}
-        {!videoManageIsLoading && !videoManageIsError && (
-          <div className="w-full max-w-xs">
-            <InputBox
-              required={true}
-              title="Enter title"
-              value={title}
-              setValue={setTitle}
-            />
-
-            <InputBox
-              required={true}
-              title="Enter description"
-              value={description}
-              setValue={setDescription}
-            />
-
-            <InputBox
-              required={true}
-              title="Enter video url"
-              value={url}
-              setValue={setUrl}
-            />
-
-            <InputBox
-              required={true}
-              title="Enter views"
-              value={views}
-              setValue={setViews}
-            />
-
-            <InputBox
-              required={true}
-              title="Enter duration"
-              value={duration}
-              setValue={setDuration}
-            />
-          </div>
-        )}
-
         <div className="flex justify-evenly items-center">
           <button
             className="bg-red-500 px-4 py-2 rounded-md text-md text-white"

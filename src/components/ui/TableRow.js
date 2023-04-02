@@ -61,7 +61,7 @@ export default function TableRow({
           modalTitle={modalTitle}
           setIsOpen={setIsOpen}
           isEditing={true}
-          video={tableData}
+          tableData={tableData}
         />
       </AppModal>
     </tr>
