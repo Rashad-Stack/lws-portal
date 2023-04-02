@@ -1,12 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { authSelector, userLoggedOut } from "../../features/auth/authSlice";
 
 export default function Logout() {
   const { user } = useSelector(authSelector);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleLogout = () => {
     dispatch(userLoggedOut());
+    navigate("/student/login");
   };
 
   // Deciding logout button for admin

@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Modal from "react-modal";
 
 import Question from "../../components/Quiz/Question";
-import { ActionAlert, ErrorMessage, Layout, Loader } from "../../components/ui";
+import {
+  ActionAlert,
+  AppModal,
+  ErrorMessage,
+  Layout,
+  Loader,
+} from "../../components/ui";
 import { authSelector } from "../../features/auth/authSlice";
 import { courseIdSelector } from "../../features/courses/courseSlice";
 import { useGetQuizQuery } from "../../features/quiz/quizApi";
@@ -70,30 +75,9 @@ export default function Quiz() {
           </>
         )}
       </div>
-      <Modal isOpen={modalIsOpen} style={customStyles} ariaHideApp={false}>
+      <AppModal modalIsOpen={modalIsOpen}>
         <ActionAlert setIsOpen={setIsOpen} />
-      </Modal>
+      </AppModal>
     </Layout>
   );
 }
-
-// styling for modal
-const customStyles = {
-  content: {
-    width: "100%",
-    height: "100%",
-    top: "50%",
-    left: "50%",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "transparent",
-  },
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(000, 000, 000, 0.75)",
-  },
-};

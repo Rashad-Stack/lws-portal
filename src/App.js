@@ -4,7 +4,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AuthLoading from "./components/ui/authLoading";
 import { authSelector } from "./features/auth/authSlice";
 import useAuthCheck from "./hooks/useAuthCheck";
-import { AdminLogin, Dashboard } from "./pages/AdminPortal";
+import {
+  AdminLogin,
+  Assignment,
+  AssignmentMark,
+  Dashboard,
+  Quizzes,
+  Videos,
+} from "./pages/AdminPortal";
 import {
   CoursePlayer,
   LeaderBoard,
@@ -24,17 +31,31 @@ function App() {
     <Router>
       <Routes>
         {user?.role === "admin" ? (
-          <Route path="/" element={<PrivetRouter />}>
-            <Route path="/" element={<Dashboard />} />
-          </Route>
+          <>
+            {/* Admin routes */}
+            <Route path="/" element={<PrivetRouter />}>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/admin/video" element={<Videos />} />
+              <Route path="admin/assignment" element={<Assignment />} />
+              <Route path="/admin/quizzes" element={<Quizzes />} />
+              <Route
+                path="/admin/assignmentMark"
+                element={<AssignmentMark />}
+              />
+            </Route>
+          </>
         ) : (
-          <Route path="/" element={<PrivetRouter />}>
-            <Route path="/" element={<CoursePlayer />} />
-            <Route path="/quiz" element={<Quiz />} />
-            <Route path="/leaderboard" element={<LeaderBoard />} />
-          </Route>
+          <>
+            {/* Student routes */}
+            <Route path="/" element={<PrivetRouter />}>
+              <Route path="/" element={<CoursePlayer />} />
+              <Route path="/quiz" element={<Quiz />} />
+              <Route path="/leaderboard" element={<LeaderBoard />} />
+            </Route>
+          </>
         )}
 
+        {/* Public routes */}
         <Route path="/" element={<PublicRouter />}>
           <Route path="/student/login" element={<StudentLogin />} />
           <Route path="/admin" element={<AdminLogin />} />
@@ -43,6 +64,9 @@ function App() {
             element={<StudentRegistration />}
           />
         </Route>
+
+        {/* 404 Not Found route */}
+        <Route path="*" element={<h1>404 Not Found</h1>} />
       </Routes>
     </Router>
   );

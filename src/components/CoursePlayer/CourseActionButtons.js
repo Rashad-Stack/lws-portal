@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 
 import { useGetOneQuizMarkQuery } from "../../features/quiz/quizApi";
@@ -8,6 +7,7 @@ import { useSelector } from "react-redux";
 import { courseIdSelector } from "../../features/courses/courseSlice";
 import { authSelector } from "../../features/auth/authSlice";
 import { AssignmentModal } from "../Assignment";
+import { AppModal } from "../ui";
 
 export default function CourseActionButtons() {
   const { courseId } = useSelector(courseIdSelector) || {};
@@ -47,30 +47,9 @@ export default function CourseActionButtons() {
       >
         {quizMark?.length ? "Quiz Submitted" : "Attend to Quiz"}
       </button>
-      <Modal isOpen={modalIsOpen} style={customStyles} ariaHideApp={false}>
+      <AppModal modalIsOpen={modalIsOpen}>
         <AssignmentModal setIsOpen={setIsOpen} />
-      </Modal>
+      </AppModal>
     </div>
   );
 }
-
-// styling for modal
-const customStyles = {
-  content: {
-    width: "100%",
-    height: "100%",
-    top: "50%",
-    left: "50%",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "transparent",
-  },
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(000, 000, 000, 0.75)",
-  },
-};

@@ -5,3 +5,5 @@ export { default as ErrorMessage } from "./ErrorMessage";
 export { default as Loader } from "./Loader";
 export { default as Layout } from "./Layout";
 export { default as ActionAlert } from "./ActionAlert";
+export { default as AppModal } from "./AppModal";
+export { default as InputBox } from "./InputBox";
