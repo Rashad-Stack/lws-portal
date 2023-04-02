@@ -7,3 +7,6 @@ export { default as Layout } from "./Layout";
 export { default as ActionAlert } from "./ActionAlert";
 export { default as AppModal } from "./AppModal";
 export { default as InputBox } from "./InputBox";
+export { default as TableHead } from "./TableHead";
+export { default as TableRow } from "./TableRow";
+export { default as AddData } from "./AddData";

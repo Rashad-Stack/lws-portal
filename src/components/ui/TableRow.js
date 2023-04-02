@@ -1,22 +1,27 @@
 import React from "react";
 import { useState } from "react";
 
-import { useDeleteVideoMutation } from "../../features/courses/coursesApi";
-import { AppModal, Loader } from "../ui";
-import AddVideoModal from "./AddVideoModal";
+import { AppModal, Loader } from ".";
 
-export default function TableRow({ video = {} }) {
-  const { id, title, description } = video;
+export default function TableRow({
+  id,
+  title,
+  description,
+  modalTitle,
+  ActionModal,
+  actionFunc,
+  loading,
+  tableData,
+}) {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [deleteVideo, { isLoading }] = useDeleteVideoMutation();
 
   return (
     <tr>
       <td className="table-td">{title}</td>
       <td className="table-td w-60 max-w-xs truncate">{description}</td>
       <td className="table-td flex gap-x-2">
-        <button onClick={() => deleteVideo(id)}>
-          {isLoading ? (
+        <button onClick={() => actionFunc(id)} disabled={loading}>
+          {loading ? (
             <Loader />
           ) : (
             <svg
@@ -52,11 +57,11 @@ export default function TableRow({ video = {} }) {
       </td>
       <AppModal modalIsOpen={modalIsOpen}>
         {/* re use add video modal form for editing */}
-        <AddVideoModal
-          modalTitle="Update video"
+        <ActionModal
+          modalTitle={modalTitle}
           setIsOpen={setIsOpen}
           isEditing={true}
-          video={video}
+          video={tableData}
         />
       </AppModal>
     </tr>

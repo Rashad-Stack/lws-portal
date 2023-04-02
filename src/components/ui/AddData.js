@@ -1,18 +1,17 @@
 import React, { useState } from "react";
-import { AppModal } from "../ui";
-import AddVideoModal from "./AddVideoModal";
+import { AppModal } from ".";
 
-export default function AddVideo() {
+export default function AddData({ AddModal, modalTitle }) {
   const [modalIsOpen, setIsOpen] = useState(false);
 
   return (
     <div className="w-full flex">
       <button className="btn ml-auto" onClick={() => setIsOpen(true)}>
-        Add Video
+        {modalTitle}
       </button>
       <AppModal modalIsOpen={modalIsOpen}>
-        <AddVideoModal
-          modalTitle="Add video"
+        <AddModal
+          modalTitle={modalTitle}
           setIsOpen={setIsOpen}
           isEditing={false}
         />
