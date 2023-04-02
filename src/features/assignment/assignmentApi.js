@@ -50,6 +50,7 @@ const assignmentApi = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetAssignmentMarkQuery,
   useGetOneAssignmentMarkQuery,
   usePostAssignmentMarkMutation,
   useGetOneAssignmentQuery,

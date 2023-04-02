@@ -10,7 +10,7 @@ export default function StudentLogin() {
   return (
     <FormLayout>
       <FormHeader title="Sign in to Student Account" />
-      <Form />
+      <Form admin={false} />
     </FormLayout>
   );
 }

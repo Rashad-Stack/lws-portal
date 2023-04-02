@@ -43,6 +43,7 @@ const quizApi = apiSlice.injectEndpoints({
           };
         },
       }),
+
       getOneQuizMark: builder.query({
         query({ courseId, studentId }) {
           return {
@@ -57,6 +58,7 @@ const quizApi = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetQuizMarkQuery,
   useGetQuizQuery,
   usePostQuizMarkMutation,
   useLazyGetQuizMarkQuery,

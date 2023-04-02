@@ -1,8 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { authSelector } from "../../features/auth/authSlice";
+import { leaderBoardScoreSelector } from "../../features/leaderBoard/leaderBoardSlice";
 import TableRow from "./TableBody";
 import TableHeader from "./TableHeader";
 
 export default function OtherUsersLeaderBoard() {
+  const { user } = useSelector(authSelector);
+  const { otherUsersScore } = useSelector(leaderBoardScoreSelector);
+
   return (
     <div className="my-8">
       <h3 className="text-lg font-bold">Top 20 Result</h3>
@@ -12,30 +18,20 @@ export default function OtherUsersLeaderBoard() {
         <TableHeader />
         {/* Table body */}
         <tbody>
-          <TableRow
-            rank="4"
-            name="Saad Hasan"
-            quizMark="50"
-            assignmentMark="50"
-            total="100"
-            current={false}
-          />
-          <TableRow
-            rank="4"
-            name="Saad Hasan"
-            quizMark="50"
-            assignmentMark="50"
-            total="100"
-            current={false}
-          />
-          <TableRow
-            rank="4"
-            name="Saad Hasan"
-            quizMark="50"
-            assignmentMark="50"
-            total="100"
-            current={false}
-          />
+          {otherUsersScore.length > 0 &&
+            otherUsersScore
+              .slice(0, 20)
+              .map((score, index) => (
+                <TableRow
+                  key={score?.studentId}
+                  rank={index + 1}
+                  name={score?.name}
+                  quizMark={score?.totalQuizMark}
+                  assignmentMark={score?.totalAssignmentMark}
+                  total={score?.totalMark}
+                  current={score?.studentId === user?.id}
+                />
+              ))}
         </tbody>
       </table>
     </div>

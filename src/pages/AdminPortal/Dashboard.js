@@ -1,5 +1,6 @@
 import React from "react";
+import { Layout } from "../../components/ui";
 
 export default function Dashboard() {
-  return <div>Dashboard</div>;
+  return <Layout>hi</Layout>;
 }

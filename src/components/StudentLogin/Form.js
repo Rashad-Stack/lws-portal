@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 
@@ -7,7 +7,7 @@ import { initialValues } from "./formValidationConfig";
 import { loginSchema } from "../../utils";
 import { useLoginMutation } from "../../features/auth/authApi";
 
-export default function Form() {
+export default function Form({ admin }) {
   const [login, { isLoading, isError, error, isSuccess }] = useLoginMutation();
 
   const { values, touched, errors, handleBlur, handleChange, handleSubmit } =
@@ -61,12 +61,21 @@ export default function Form() {
       </div>
       <div className="flex items-center justify-end">
         <div className="text-sm">
-          <Link
-            to="/student/registration"
-            className="font-medium text-violet-600 hover:text-violet-500"
-          >
-            Create New Account
-          </Link>
+          {admin ? (
+            <Link
+              to="/admin/forget"
+              className="font-medium text-violet-600 hover:text-violet-500"
+            >
+              Forgot your password?
+            </Link>
+          ) : (
+            <Link
+              to="/student/registration"
+              className="font-medium text-violet-600 hover:text-violet-500"
+            >
+              Create New Account
+            </Link>
+          )}
         </div>
       </div>
       <div>

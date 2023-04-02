@@ -15,7 +15,9 @@ export default function Navbar() {
           <img className="h-10" src={brandImage} />
         </Link>
         <div className="flex items-center gap-3">
-          <Link to="/leaderboard">Leaderboard</Link>
+          {user.role === "student" && (
+            <Link to="/leaderboard">Leaderboard</Link>
+          )}
           <h2 className="font-bold">{user?.name}</h2>
           <Logout />
         </div>
