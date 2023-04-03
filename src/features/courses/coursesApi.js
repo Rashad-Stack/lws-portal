@@ -73,11 +73,7 @@ const coursesApi = apiSlice.injectEndpoints({
                 (draft) => {
                   if (updatedVideo?.id) {
                     const videoToUpdate = draft.find((t) => t.id == id);
-                    videoToUpdate.title = updatedVideo.title;
-                    videoToUpdate.description = updatedVideo.description;
-                    videoToUpdate.url = updatedVideo.url;
-                    videoToUpdate.views = updatedVideo.views;
-                    videoToUpdate.duration = updatedVideo.duration;
+                    Object.assign(videoToUpdate, updatedVideo);
                   }
                 }
               )

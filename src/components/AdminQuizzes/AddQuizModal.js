@@ -3,6 +3,7 @@ import { ErrorMessage, InputBox, Loader } from "../ui";
 
 import OptionIdentifier from "./OptionIdentifier";
 import useQuizManage from "../../hooks/useQuizManage";
+import useQuizEditState from "../../hooks/useQuizEditState";
 
 export default function AddQuizModal({
   modalTitle,
@@ -10,24 +11,38 @@ export default function AddQuizModal({
   isEditing,
   tableData = {},
 }) {
-  const [question, setQuestion] = useState(tableData?.question || "");
-  const [video_id, setVideo_id] = useState(tableData?.video_id || "");
-  const [video_title, setVideo_title] = useState(tableData?.video_title || "");
-  const [option1, setOption1] = useState(tableData?.options[0]?.option || "");
-  const [option2, setOption2] = useState(tableData?.options[1]?.option || "");
-  const [option3, setOPtion3] = useState(tableData?.options[2]?.option || "");
-  const [option4, setOPtion4] = useState(tableData?.options[3]?.option || "");
+  const {
+    initialQuestion,
+    initialVideoId,
+    initialVideoTitle,
+    initialOption1,
+    initialOption1IsCorrect,
+    initialOption2,
+    initialOption2IsCorrect,
+    initialOption3,
+    initialOption3IsCorrect,
+    initialOption4,
+    initialOption4IsCorrect,
+  } = useQuizEditState(tableData);
+
+  const [question, setQuestion] = useState(initialQuestion || "");
+  const [video_id, setVideo_id] = useState(initialVideoId || "");
+  const [video_title, setVideo_title] = useState(initialVideoTitle || "");
+  const [option1, setOption1] = useState(initialOption1 || "");
+  const [option2, setOption2] = useState(initialOption2 || "");
+  const [option3, setOPtion3] = useState(initialOption3 || "");
+  const [option4, setOPtion4] = useState(initialOption4 || "");
   const [option1IsCorrect, setOPtion1IsCorrect] = useState(
-    tableData?.options[0]?.isCorrect || false
+    initialOption1IsCorrect || false
   );
   const [option2IsCorrect, setOPtion2IsCorrect] = useState(
-    tableData?.options[1]?.isCorrect || false
+    initialOption2IsCorrect || false
   );
   const [option3IsCorrect, setOPtion3IsCorrect] = useState(
-    tableData?.options[2]?.isCorrect || false
+    initialOption3IsCorrect || false
   );
   const [option4IsCorrect, setOPtion4IsCorrect] = useState(
-    tableData?.options[3]?.isCorrect || false
+    initialOption4IsCorrect || false
   );
   const { addQuizzes, editQuiz, quizIsLoading, quizIsError, quizIsSuccess } =
     useQuizManage();

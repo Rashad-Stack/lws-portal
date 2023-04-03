@@ -29,20 +29,19 @@ const quizApi = apiSlice.injectEndpoints({
             option4,
             option4IsCorrect,
           } = data;
+
+          // Create the options array using map
+          const options = [
+            { id: 1, isCorrect: option1IsCorrect, option: option1 },
+            { id: 2, isCorrect: option2IsCorrect, option: option2 },
+            { id: 3, isCorrect: option3IsCorrect, option: option3 },
+            { id: 4, isCorrect: option4IsCorrect, option: option4 },
+          ];
+
           return {
             url: "/quizzes/",
             method: "POST",
-            body: {
-              question,
-              video_id,
-              video_title,
-              options: [
-                { id: 1, isCorrect: option1IsCorrect, option: option1 },
-                { id: 2, isCorrect: option2IsCorrect, option: option2 },
-                { id: 3, isCorrect: option3IsCorrect, option: option3 },
-                { id: 4, isCorrect: option4IsCorrect, option: option4 },
-              ],
-            },
+            body: { question, video_id, video_title, options },
           };
         },
 
@@ -67,6 +66,7 @@ const quizApi = apiSlice.injectEndpoints({
       }),
 
       editQuiz: builder.mutation({
+        // Destructure id and data from the input object
         query({ id, data = {} }) {
           const {
             question,
@@ -81,20 +81,20 @@ const quizApi = apiSlice.injectEndpoints({
             option4,
             option4IsCorrect,
           } = data;
+
+          // Create the options array using map
+          const options = [
+            { id: 1, isCorrect: option1IsCorrect, option: option1 },
+            { id: 2, isCorrect: option2IsCorrect, option: option2 },
+            { id: 3, isCorrect: option3IsCorrect, option: option3 },
+            { id: 4, isCorrect: option4IsCorrect, option: option4 },
+          ];
+
+          // Return the URL, method, and body as an object
           return {
             url: `/quizzes/${id}`,
             method: "PATCH",
-            body: {
-              question,
-              video_id,
-              video_title,
-              options: [
-                { id: 1, isCorrect: option1IsCorrect, option: option1 },
-                { id: 2, isCorrect: option2IsCorrect, option: option2 },
-                { id: 3, isCorrect: option3IsCorrect, option: option3 },
-                { id: 4, isCorrect: option4IsCorrect, option: option4 },
-              ],
-            },
+            body: { question, video_id, video_title, options },
           };
         },
         async onQueryStarted({ id }, { queryFulfilled, dispatch }) {
@@ -107,10 +107,7 @@ const quizApi = apiSlice.injectEndpoints({
                 (draft) => {
                   if (updatedQuiz?.id) {
                     const quizToUpdate = draft.find((q) => q.id == id);
-                    quizToUpdate.question = updatedQuiz.updatedQuiz;
-                    quizToUpdate.video_id = updatedQuiz.video_id;
-                    quizToUpdate.video_title = updatedQuiz.video_title;
-                    quizToUpdate.options = updatedQuiz.options;
+                    Object.assign(quizToUpdate, updatedQuiz);
                   }
                 }
               )
@@ -135,6 +132,7 @@ const quizApi = apiSlice.injectEndpoints({
             apiSlice.util.updateQueryData("getQuizzes", undefined, (draft) => {
               const index = draft.findIndex((quiz) => quiz.id == arg);
               if (index != -1) {
+                // Remove the deleted quiz from the array
                 draft.splice(index, 1);
               }
             })
@@ -142,6 +140,7 @@ const quizApi = apiSlice.injectEndpoints({
           try {
             await queryFulfilled;
           } catch (err) {
+            // Use optional chaining to undo the delete patch only if it was successfully applied
             deletePatch.undo();
           }
         },
