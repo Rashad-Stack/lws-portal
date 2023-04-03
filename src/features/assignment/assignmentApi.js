@@ -2,6 +2,7 @@ import apiSlice from "../api/apiSlice";
 const assignmentApi = apiSlice.injectEndpoints({
   endpoints(builder) {
     return {
+      // Student portal section
       getAssignmentMark: builder.query({
         query() {
           return {
@@ -45,6 +46,115 @@ const assignmentApi = apiSlice.injectEndpoints({
           };
         },
       }),
+
+      // Admin Portal section
+      getAssignment: builder.query({
+        query() {
+          return {
+            url: "/assignments",
+            method: "GET",
+          };
+        },
+      }),
+
+      addAssignment: builder.mutation({
+        query(data) {
+          return {
+            url: "/assignments",
+            method: "POST",
+            body: {
+              ...data,
+              totalMark: data.totalMark * 1,
+              video_id: data.video_id * 1,
+            },
+          };
+        },
+
+        // Pessimistic Update
+        async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+          try {
+            const { data: createdAssignment } = await queryFulfilled;
+
+            dispatch(
+              apiSlice.util.updateQueryData(
+                "getAssignment",
+                undefined,
+                (draft) => {
+                  draft.push(createdAssignment);
+                }
+              )
+            );
+          } catch (err) {
+            // do nothing
+          }
+        },
+      }),
+
+      editAssignment: builder.mutation({
+        query({ id, data }) {
+          return {
+            url: `/assignments/${id}`,
+            method: "PATCH",
+            body: {
+              ...data,
+              totalMark: data.totalMark * 1,
+              video_id: data.video_id * 1,
+            },
+          };
+        },
+        async onQueryStarted({ id }, { queryFulfilled, dispatch }) {
+          try {
+            const { data: updatedAssignment } = await queryFulfilled;
+            dispatch(
+              apiSlice.util.updateQueryData(
+                "getAssignment",
+                undefined,
+                (draft) => {
+                  if (updatedAssignment?.id) {
+                    const assignmentToUpdate = draft.find((a) => a.id == id);
+                    Object.assign(assignmentToUpdate, updatedAssignment);
+                  }
+                }
+              )
+            );
+          } catch (err) {
+            // Do nothing
+          }
+        },
+      }),
+
+      deleteAssignment: builder.mutation({
+        query(id) {
+          return {
+            url: `/assignments/${id}`,
+            method: "DELETE",
+          };
+        },
+        // Optimistic delete
+        async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+          const deletePatch = dispatch(
+            apiSlice.util.updateQueryData(
+              "getAssignment",
+              undefined,
+              (draft) => {
+                const index = draft.findIndex(
+                  (assignment) => assignment.id == arg
+                );
+                if (index != -1) {
+                  // Remove the deleted quiz from the array
+                  draft.splice(index, 1);
+                }
+              }
+            )
+          );
+          try {
+            await queryFulfilled;
+          } catch (err) {
+            // Use optional chaining to undo the delete patch only if it was successfully applied
+            deletePatch.undo();
+          }
+        },
+      }),
     };
   },
 });
@@ -54,4 +164,8 @@ export const {
   useGetOneAssignmentMarkQuery,
   usePostAssignmentMarkMutation,
   useGetOneAssignmentQuery,
+  useAddAssignmentMutation,
+  useDeleteAssignmentMutation,
+  useEditAssignmentMutation,
+  useGetAssignmentQuery,
 } = assignmentApi;
