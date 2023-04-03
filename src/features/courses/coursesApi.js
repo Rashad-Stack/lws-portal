@@ -3,6 +3,7 @@ import apiSlice from "../api/apiSlice";
 const coursesApi = apiSlice.injectEndpoints({
   endpoints(builder) {
     return {
+      // Student portal section
       getCourses: builder.query({
         query() {
           return {
@@ -21,6 +22,7 @@ const coursesApi = apiSlice.injectEndpoints({
         },
       }),
 
+      // Admin Portal section
       addVideo: builder.mutation({
         query(data) {
           return {
