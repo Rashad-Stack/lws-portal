@@ -61,13 +61,13 @@ export default function AddVideoModal({
 
   return (
     <form
-      className="bg-slate-800 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0"
+      className="flex justify-center items-center absolute top-0 right-0 bottom-0 left-0"
       onSubmit={handleSubmitVideo}
     >
-      <div className="bg-gray-800 px-16 py-14 rounded-md">
+      <div className="w-4/5 lg:w-4/5 xl:w-1/3 bg-gray-800 px-16 py-14 rounded-md">
         <h1 className="text-xl mb-4 font-bold text-slate-100">{modalTitle}</h1>
 
-        <div className="w-full max-w-xs">
+        <div className="w-full">
           <InputBox
             required={true}
             title="Enter title"

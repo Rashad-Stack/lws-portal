@@ -13,7 +13,7 @@ export default function InputBox({
         {title}
       </label>
       <input
-        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="w-full border text-sm rounded-md block p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white leading-tight focus:outline-none focus:shadow-outline"
         type={type}
         required={required}
         value={value}

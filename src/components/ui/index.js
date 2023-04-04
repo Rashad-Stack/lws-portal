@@ -10,3 +10,4 @@ export { default as InputBox } from "./InputBox";
 export { default as TableHead } from "./TableHead";
 export { default as TableRow } from "./TableRow";
 export { default as AddData } from "./AddData";
+export { default as VideoSelector } from "./VideoSelector";

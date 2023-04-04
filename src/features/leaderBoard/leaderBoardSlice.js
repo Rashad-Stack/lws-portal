@@ -39,25 +39,31 @@ const leaderBoardSlice = createSlice({
       });
 
       // Calculating total mark of each student
-      for (const [studentId, assignmentMarks] of Object.entries(
-        studentAssignmentData
-      )) {
+      for (const [studentId, marks] of Object.entries({
+        ...studentQuizData,
+        ...studentAssignmentData,
+      })) {
         // calculating total assignment mark
-        const totalAssignmentMark = assignmentMarks.reduce(
-          (a, b) => a + b?.mark,
+        const assignmentMark = studentAssignmentData[studentId] || [];
+        const totalAssignmentMark = assignmentMark?.reduce(
+          (a, b) => a + b?.mark || 0,
           0
         );
+        console.log(totalAssignmentMark);
 
         // calculating total quiz mark
         const quizMarks = studentQuizData[studentId] || [];
-        const totalQuizMark = quizMarks.reduce((a, b) => a + b?.totalMark, 0);
+        const totalQuizMark = quizMarks.reduce(
+          (a, b) => a + b?.totalMark || 0,
+          0
+        );
 
         // set calculated marks to the state
         state.otherUsersScore.push({
-          name: assignmentMarks[0]?.student_name,
-          studentId: assignmentMarks[0]?.student_id,
-          totalQuizMark,
-          totalAssignmentMark,
+          name: marks[0]?.student_name,
+          studentId: marks[0]?.student_id,
+          totalQuizMark: totalQuizMark,
+          totalAssignmentMark: totalAssignmentMark,
           totalMark: totalQuizMark + totalAssignmentMark,
         });
       }

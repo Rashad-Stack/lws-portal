@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ErrorMessage, InputBox, Loader } from "../ui";
+import { ErrorMessage, InputBox, Loader, VideoSelector } from "../ui";
 
 import OptionIdentifier from "./OptionIdentifier";
 import useQuizManage from "../../hooks/useQuizManage";
@@ -26,8 +26,7 @@ export default function AddQuizModal({
   } = useQuizEditState(tableData);
 
   const [question, setQuestion] = useState(initialQuestion || "");
-  const [video_id, setVideo_id] = useState(initialVideoId || "");
-  const [video_title, setVideo_title] = useState(initialVideoTitle || "");
+  const [video, setVideo] = useState({});
   const [option1, setOption1] = useState(initialOption1 || "");
   const [option2, setOption2] = useState(initialOption2 || "");
   const [option3, setOPtion3] = useState(initialOption3 || "");
@@ -49,8 +48,7 @@ export default function AddQuizModal({
 
   const resetForm = () => {
     setQuestion("");
-    setVideo_id("");
-    setVideo_title("");
+    setVideo({});
     setOption1("");
     setOption2("");
     setOPtion3("");
@@ -65,8 +63,8 @@ export default function AddQuizModal({
     event.preventDefault();
     const data = {
       question,
-      video_id: video_id * 1,
-      video_title,
+      video_id: video?.video_id * 1,
+      video_title: video?.video_title,
       option1,
       option1IsCorrect,
       option2,
@@ -100,17 +98,12 @@ export default function AddQuizModal({
             value={question}
             setValue={setQuestion}
           />
-          <InputBox
-            required={true}
-            title="Enter video id"
-            value={video_id}
-            setValue={setVideo_id}
-          />
-          <InputBox
-            required={true}
-            title="Enter video title"
-            value={video_title}
-            setValue={setVideo_title}
+          <VideoSelector
+            title="Select assignment Related video"
+            initialVideo={
+              isEditing ? { initialVideoId, initialVideoTitle } : {}
+            }
+            setVideo={setVideo}
           />
           <div className="flex gap-5">
             <div>

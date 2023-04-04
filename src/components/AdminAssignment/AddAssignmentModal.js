@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ErrorMessage, InputBox, Loader } from "../ui";
+import { ErrorMessage, InputBox, Loader, VideoSelector } from "../ui";
 import useAssignmentManage from "../../hooks/useAssignmentManage";
 import useAssignmentEditingState from "../../hooks/useAssignmentEditingState";
 
@@ -19,20 +19,24 @@ export default function AddAssignmentModal({
   const { initialTitle, initialVideoId, initialVideoTitle, initialTotalMark } =
     useAssignmentEditingState(tableData);
   const [title, setTitle] = useState(initialTitle || "");
-  const [video_id, setVideo_id] = useState(initialVideoId || "");
-  const [video_title, setVideo_title] = useState(initialVideoTitle || "");
+  const [video, setVideo] = useState({});
   const [totalMark, setTotalMark] = useState(initialTotalMark || "");
 
   const resetForm = () => {
     setTitle("");
-    setVideo_id("");
-    setVideo_title("");
+    setVideo("");
     setTotalMark("");
   };
 
   const handleSubmitAssignment = (event) => {
     event.preventDefault();
-    const data = { title, video_id, video_title, totalMark };
+    const data = {
+      title,
+      totalMark,
+      video_id: video?.id,
+      video_title: video?.title,
+    };
+
     isEditing
       ? editAssignment({ id: tableData?.id, data })
       : addAssignment(data);
@@ -55,22 +59,18 @@ export default function AddAssignmentModal({
         <div className="w-full">
           <InputBox
             required={true}
-            title="Enter Title"
+            title="Enter assignment title"
             value={title}
             setValue={setTitle}
           />
-          <InputBox
-            required={true}
-            title="Enter video id"
-            value={video_id}
-            setValue={setVideo_id}
+          <VideoSelector
+            title="Select assignment Related video"
+            initialVideo={
+              isEditing ? { initialVideoId, initialVideoTitle } : {}
+            }
+            setVideo={setVideo}
           />
-          <InputBox
-            required={true}
-            title="Enter video title"
-            value={video_title}
-            setValue={setVideo_title}
-          />
+
           <InputBox
             required={true}
             title="Enter assignment mark"

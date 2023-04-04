@@ -12,25 +12,33 @@ function CurrentUserTable() {
   const { name, rank, totalQuizMark, totalAssignmentMark, totalMark } =
     currentUserScore;
 
+  console.log(rank);
+
   return (
     <div>
       <h3 className="text-lg font-bold">Your Position in Leaderboard</h3>
-      <table className="text-base w-full border border-slate-600/50 rounded-md my-4">
-        {/* Table Header */}
-        <TableHeader />
+      {rank ? (
+        <table className="text-base w-full border border-slate-600/50 rounded-md my-4">
+          {/* Table Header */}
+          <TableHeader />
 
-        {/* Table body */}
-        <tbody>
-          <TableRow
-            rank={rank}
-            name={name}
-            quizMark={totalQuizMark}
-            assignmentMark={totalAssignmentMark}
-            total={totalMark}
-            current={currentUserScore?.studentId === user?.id}
-          />
-        </tbody>
-      </table>
+          {/* Table body */}
+          <tbody>
+            <TableRow
+              rank={rank}
+              name={name}
+              quizMark={totalQuizMark}
+              assignmentMark={totalAssignmentMark}
+              total={totalMark}
+              current={currentUserScore?.studentId === user?.id}
+            />
+          </tbody>
+        </table>
+      ) : (
+        <h1 className="font-bold text-red-400 text-center text-lg py-8">
+          You didn&apos;t participant any quiz or assignment!
+        </h1>
+      )}
     </div>
   );
 }
