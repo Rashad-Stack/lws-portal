@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import ReactPlayer from "react-player";
 
 import { useGetVideoQuery } from "../../features/courses/coursesApi";
 import { courseIdSelector } from "../../features/courses/courseSlice";
@@ -27,15 +28,9 @@ export default function Player() {
       {!isLoading && !isError && video?.id && (
         // Rendering data throw component
         <>
-          <iframe
-            width="100%"
-            className="aspect-video"
-            src={url}
-            title={title}
-            frameBorder={0}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
+          <div>
+            <ReactPlayer url={url} width="100%" height={480} controls={true} />
+          </div>
           <div>
             <h1 className="text-lg font-semibold tracking-tight text-slate-100">
               {title}

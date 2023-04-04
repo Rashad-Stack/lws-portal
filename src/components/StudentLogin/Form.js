@@ -5,19 +5,29 @@ import { useFormik } from "formik";
 import { Button, ErrorMessage } from "../ui";
 import { initialValues } from "./formValidationConfig";
 import { loginSchema } from "../../utils";
-import { useLoginMutation } from "../../features/auth/authApi";
+import { useSelector } from "react-redux";
+import { authSelector } from "../../features/auth/authSlice";
+import useRoleLogin from "../../hooks/useRoleLogin";
 
 export default function Form({ admin }) {
-  const [login, { isLoading, isError, error, isSuccess }] = useLoginMutation();
+  const {
+    login,
+    adminLogin,
+    loginIsLoading,
+    loginIsError,
+    loginError,
+    loginSuccess,
+  } = useRoleLogin();
+  const { isLoginError } = useSelector(authSelector);
 
   const { values, touched, errors, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: loginSchema,
       onSubmit(values, action) {
-        login(values);
+        admin ? adminLogin(values) : login(values);
 
-        if (isSuccess) {
+        if (loginSuccess) {
           action.resetForm();
         }
       },
@@ -85,9 +95,20 @@ export default function Form({ admin }) {
         {errors?.password && touched?.password && (
           <ErrorMessage message={errors.password} />
         )}
-        {isError && <ErrorMessage message={error.data} />}
+        {loginIsError && (
+          <ErrorMessage message={loginError?.data || "Failed to login!"} />
+        )}
+        {isLoginError && (
+          <ErrorMessage
+            message={
+              admin
+                ? "Please Provide admin account!"
+                : "Please Provide student account!"
+            }
+          />
+        )}
 
-        <Button title="Sign in" loading={isLoading} />
+        <Button title="Sign in" loading={loginIsLoading} />
       </div>
     </form>
   );

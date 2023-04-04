@@ -21,6 +21,7 @@ import {
 } from "./pages/StudentPortal";
 import PrivetRouter from "./routes/PrivetRouter";
 import PublicRouter from "./routes/PublicRouter";
+import { Page404 } from "./components/ui";
 
 function App() {
   const authChecked = useAuthCheck();
@@ -66,7 +67,7 @@ function App() {
         </Route>
 
         {/* 404 Not Found route */}
-        <Route path="*" element={<h1>404 Not Found</h1>} />
+        <Route path="*" element={<Page404 />} />
       </Routes>
     </Router>
   );

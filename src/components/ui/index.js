@@ -11,3 +11,4 @@ export { default as TableHead } from "./TableHead";
 export { default as TableRow } from "./TableRow";
 export { default as AddData } from "./AddData";
 export { default as VideoSelector } from "./VideoSelector";
+export { default as Page404 } from "./Page404";

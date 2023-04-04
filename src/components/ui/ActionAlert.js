@@ -26,7 +26,7 @@ export default function ActionAlert({ setIsOpen }) {
   }, [isSuccess]);
 
   return (
-    <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0">
+    <div className="flex justify-center items-center absolute top-0 right-0 bottom-0 left-0">
       <div className="bg-gray-800 px-16 py-14 rounded-md text-center">
         {!isLoading && isError && (
           <ErrorMessage message="Something went wrong!" />

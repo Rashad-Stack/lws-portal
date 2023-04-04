@@ -12,8 +12,6 @@ function CurrentUserTable() {
   const { name, rank, totalQuizMark, totalAssignmentMark, totalMark } =
     currentUserScore;
 
-  console.log(rank);
-
   return (
     <div>
       <h3 className="text-lg font-bold">Your Position in Leaderboard</h3>

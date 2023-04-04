@@ -21,22 +21,26 @@ const leaderBoardSlice = createSlice({
       const studentQuizData = {};
 
       // assembling assignment mark of each student
-      state.assignmentMark.forEach((mark) => {
-        const studentId = mark.student_id;
-        if (!studentAssignmentData[studentId]) {
-          studentAssignmentData[studentId] = [];
-        }
-        studentAssignmentData[studentId].push(mark);
-      });
+      if (state.assignmentMark?.length > 0) {
+        state.assignmentMark.forEach((mark) => {
+          const studentId = mark.student_id;
+          if (!studentAssignmentData[studentId]) {
+            studentAssignmentData[studentId] = [];
+          }
+          studentAssignmentData[studentId].push(mark);
+        });
+      }
 
       // assembling quiz mark of each student
-      state.quizScore.forEach((mark) => {
-        const studentId = mark.student_id;
-        if (!studentQuizData[studentId]) {
-          studentQuizData[studentId] = [];
-        }
-        studentQuizData[studentId].push(mark);
-      });
+      if (state.quizScore?.length > 0) {
+        state.quizScore.forEach((mark) => {
+          const studentId = mark.student_id;
+          if (!studentQuizData[studentId]) {
+            studentQuizData[studentId] = [];
+          }
+          studentQuizData[studentId].push(mark);
+        });
+      }
 
       // Calculating total mark of each student
       for (const [studentId, marks] of Object.entries({
@@ -49,7 +53,6 @@ const leaderBoardSlice = createSlice({
           (a, b) => a + b?.mark || 0,
           0
         );
-        console.log(totalAssignmentMark);
 
         // calculating total quiz mark
         const quizMarks = studentQuizData[studentId] || [];
@@ -79,9 +82,11 @@ const leaderBoardSlice = createSlice({
       );
 
       // adding rank
-      loggedUser.rank =
-        state.otherUsersScore.findIndex((cu) => cu.studentId === user.id) + 1;
-      state.currentUserScore = loggedUser;
+      if (loggedUser) {
+        loggedUser.rank =
+          state.otherUsersScore.findIndex((cu) => cu.studentId === user.id) + 1;
+        state.currentUserScore = loggedUser;
+      }
     },
   },
 });

@@ -104,7 +104,9 @@ export default function RegistrationForm() {
         {errors?.confirm_password && touched?.confirm_password && (
           <ErrorMessage message={errors.confirm_password} />
         )}
-        {isError && <ErrorMessage message={error?.data} />}
+        {isError && (
+          <ErrorMessage message={error?.data || "Failed to register!"} />
+        )}
 
         <Button title="Create Account" loading={isLoading} />
       </div>

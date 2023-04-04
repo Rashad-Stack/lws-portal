@@ -14,7 +14,7 @@ export default function VideoSelector({ title, setVideo, initialVideo = {} }) {
   };
 
   //   Destructuring Initial values for editing
-  const { initialVideoTitle, initialVideoId } = initialVideo;
+  const { initialVideoId } = initialVideo;
 
   return (
     <div className="mb-4 w-full">
@@ -34,6 +34,7 @@ export default function VideoSelector({ title, setVideo, initialVideo = {} }) {
           value={selectedVideo?.title}
           onChange={handleSetVideo}
         >
+          <option hidden>Select a video</option>
           {videos.map((video) => {
             let initialVideo = undefined;
             // Checking initial values for editing
@@ -47,7 +48,7 @@ export default function VideoSelector({ title, setVideo, initialVideo = {} }) {
                 // Set object as string into value
                 value={JSON.stringify(initialVideo || video)}
               >
-                {initialVideoTitle || video?.title}
+                {initialVideo?.title || video?.title}
               </option>
             );
           })}
