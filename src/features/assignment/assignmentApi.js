@@ -123,6 +123,38 @@ const assignmentApi = apiSlice.injectEndpoints({
         },
       }),
 
+      editAssignmentMark: builder.mutation({
+        query({ id, data }) {
+          return {
+            url: `/assignmentMark/${id}`,
+            method: "PATCH",
+            body: {
+              mark: data * 1,
+              status: "published",
+            },
+          };
+        },
+        // Optimistic update
+        async onQueryStarted({ id, data }, { queryFulfilled, dispatch }) {
+          const updatePatch = dispatch(
+            apiSlice.util.updateQueryData(
+              "getAssignmentMark",
+              undefined,
+              (draft) => {
+                const assignmentMarkToUpdate = draft.find((a) => a.id == id);
+                assignmentMarkToUpdate.status = "published";
+                assignmentMarkToUpdate.mark = data;
+              }
+            )
+          );
+          try {
+            await queryFulfilled;
+          } catch (err) {
+            updatePatch.undo();
+          }
+        },
+      }),
+
       deleteAssignment: builder.mutation({
         query(id) {
           return {
@@ -168,4 +200,5 @@ export const {
   useDeleteAssignmentMutation,
   useEditAssignmentMutation,
   useGetAssignmentQuery,
+  useEditAssignmentMarkMutation,
 } = assignmentApi;
