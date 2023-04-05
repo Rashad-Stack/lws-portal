@@ -33,6 +33,7 @@ export default function CourseActionButtons() {
             ? "border-gray-600 text-gray-600"
             : "border-cyan text-cyan hover:bg-cyan  hover:text-primary"
         }`}
+        disabled={assignmentMark.length > 0 && assignmentMark[0]?.status}
       >
         {(assignmentMark.length > 0 && assignmentMark[0]?.status) ||
           "Assignment"}
@@ -44,6 +45,7 @@ export default function CourseActionButtons() {
             ? "border-gray-600 text-gray-600"
             : "border-cyan text-cyan hover:bg-cyan  hover:text-primary"
         }`}
+        disabled={quizMark?.length}
       >
         {quizMark?.length ? "Quiz Submitted" : "Attend to Quiz"}
       </button>
