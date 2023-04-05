@@ -71,22 +71,25 @@ const leaderBoardSlice = createSlice({
         });
       }
 
-      // Sorting data by highest mark
-      state.otherUsersScore = state.otherUsersScore.sort(
-        (a, b) => b.totalMark - a.totalMark
-      );
+      // Sort the array in descending order based on totalMark
+      state.otherUsersScore.sort((a, b) => b.totalMark - a.totalMark);
 
-      // filter out logged/current user marks
-      const loggedUser = state.otherUsersScore.find(
+      // Rank the students based on their totalMark
+      let rank = 1;
+      state.otherUsersScore.forEach((student, index) => {
+        if (
+          index > 0 &&
+          student.totalMark < state.otherUsersScore[index - 1].totalMark
+        ) {
+          rank++;
+        }
+        student.rank = rank;
+      });
+
+      // // filter out logged/current user marks
+      state.currentUserScore = state.otherUsersScore.find(
         (cu) => cu.studentId === user.id
       );
-
-      // adding rank
-      if (loggedUser) {
-        loggedUser.rank =
-          state.otherUsersScore.findIndex((cu) => cu.studentId === user.id) + 1;
-        state.currentUserScore = loggedUser;
-      }
     },
   },
 });

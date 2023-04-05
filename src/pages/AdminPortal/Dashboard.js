@@ -24,7 +24,7 @@ export default function Dashboard() {
                 </svg>
                 <p className="text-slate-200 mt-3 ">Videos</p>
               </Link>
-              <Link to="admin/assignment" className="dashboard-item-card">
+              <Link to="/admin/assignment" className="dashboard-item-card">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

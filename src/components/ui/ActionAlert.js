@@ -21,7 +21,7 @@ export default function ActionAlert({ setIsOpen }) {
   useEffect(() => {
     if (isSuccess) {
       setIsOpen(false);
-      navigate(-1);
+      navigate("/leaderboard");
     }
   }, [isSuccess]);
 

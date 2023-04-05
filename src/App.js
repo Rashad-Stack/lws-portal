@@ -1,6 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import AuthLoading from "./components/ui/authLoading";
 import { authSelector } from "./features/auth/authSlice";
 import useAuthCheck from "./hooks/useAuthCheck";
@@ -26,6 +31,7 @@ import { Page404 } from "./components/ui";
 function App() {
   const authChecked = useAuthCheck();
   const { user } = useSelector(authSelector);
+
   return !authChecked ? (
     <AuthLoading />
   ) : (
@@ -35,9 +41,10 @@ function App() {
           <>
             {/* Admin routes */}
             <Route path="/" element={<PrivetRouter />}>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={<Navigate to="/admin/dashboard" />} />
+              <Route path="/admin/dashboard" element={<Dashboard />} />
               <Route path="/admin/video" element={<Videos />} />
-              <Route path="admin/assignment" element={<Assignment />} />
+              <Route path="/admin/assignment" element={<Assignment />} />
               <Route path="/admin/quizzes" element={<Quizzes />} />
               <Route
                 path="/admin/assignmentMark"
@@ -59,7 +66,7 @@ function App() {
         {/* Public routes */}
         <Route path="/" element={<PublicRouter />}>
           <Route path="/student/login" element={<StudentLogin />} />
-          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
           <Route
             path="/student/registration"
             element={<StudentRegistration />}

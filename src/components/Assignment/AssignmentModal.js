@@ -2,17 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { authSelector } from "../../features/auth/authSlice";
-import { courseIdSelector } from "../../features/courses/courseSlice";
 import { ErrorMessage, Loader } from "../ui";
-import {
-  useGetOneAssignmentQuery,
-  usePostAssignmentMarkMutation,
-} from "../../features/assignment/assignmentApi";
+import { usePostAssignmentMarkMutation } from "../../features/assignment/assignmentApi";
+import useQuizAndAssignment from "../../hooks/useQuizAndAssignment";
 
 export default function AssignmentModal({ setIsOpen }) {
-  const { courseId } = useSelector(courseIdSelector);
   const { user } = useSelector(authSelector);
-  const { data: assignment } = useGetOneAssignmentQuery(courseId);
+  const { assignment } = useQuizAndAssignment();
 
   const [postAssignmentMark, { isLoading, isError, isSuccess }] =
     usePostAssignmentMarkMutation();
@@ -49,6 +45,16 @@ export default function AssignmentModal({ setIsOpen }) {
       <div className="w-4/5 lg:w-4/5 xl:w-1/3 bg-gray-800 px-16 py-14 rounded-md">
         <h1 className="text-xl mb-4 font-bold text-slate-100">
           Submit your assignment
+        </h1>
+        <h1 className="text-lg mb-4 font-semibold text-slate-100">
+          Assignment:{" "}
+          {isLoading ? (
+            <Loader />
+          ) : (
+            assignment?.length > 0 &&
+            assignment[0]?.video_id &&
+            assignment[0]?.title
+          )}
         </h1>
 
         <div className="w-full">

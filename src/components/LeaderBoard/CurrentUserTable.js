@@ -40,4 +40,4 @@ function CurrentUserTable() {
     </div>
   );
 }
-export default React.memo(CurrentUserTable);
+export default CurrentUserTable;

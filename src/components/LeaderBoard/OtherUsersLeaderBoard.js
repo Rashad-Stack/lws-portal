@@ -21,10 +21,10 @@ export default function OtherUsersLeaderBoard() {
           {otherUsersScore.length > 0 &&
             otherUsersScore
               .slice(0, 20)
-              .map((score, index) => (
+              .map((score) => (
                 <TableRow
                   key={score?.studentId}
-                  rank={index + 1}
+                  rank={score?.rank}
                   name={score?.name}
                   quizMark={score?.totalQuizMark}
                   assignmentMark={score?.totalAssignmentMark}

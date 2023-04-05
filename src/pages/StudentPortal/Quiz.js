@@ -10,17 +10,15 @@ import {
   Loader,
 } from "../../components/ui";
 import { authSelector } from "../../features/auth/authSlice";
-import { courseIdSelector } from "../../features/courses/courseSlice";
-import { useGetQuizQuery } from "../../features/quiz/quizApi";
 import {
   calculateQuizMark,
   quizzesSelector,
 } from "../../features/quiz/quizSlice";
+import useQuizAndAssignment from "../../hooks/useQuizAndAssignment";
 
 export default function Quiz() {
-  const { courseId } = useSelector(courseIdSelector);
   const { user } = useSelector(authSelector);
-  const { data: quiz, isLoading, isError } = useGetQuizQuery(courseId);
+  const { quiz, isLoading, isError } = useQuizAndAssignment();
   const { quizzes } = useSelector(quizzesSelector);
   const [modalIsOpen, setIsOpen] = useState(false);
 
