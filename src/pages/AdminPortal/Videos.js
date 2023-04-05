@@ -9,12 +9,14 @@ export default function Videos() {
       <section className="py-6 bg-primary">
         <div className="mx-auto max-w-full px-5 lg:px-20">
           <div className="px-3 py-20 bg-opacity-10">
+            {/* Add video */}
             <AddData
               modalTitle="Add video"
               AddModal={AddVideoModal}
               buttonTitle="Add Video"
             />
             <div className="overflow-x-auto mt-4">
+              {/* Render added video list for modify */}
               <VideoTable />
             </div>
           </div>

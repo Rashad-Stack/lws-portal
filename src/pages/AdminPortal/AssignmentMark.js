@@ -11,8 +11,10 @@ export default function AssignmentMark() {
       <section className="py-6 bg-primary">
         <div className="mx-auto max-w-full px-5 lg:px-20">
           <div className="px-3 py-20 bg-opacity-10">
+            {/* Render assignment count */}
             <FilterButton />
             <div className="overflow-x-auto mt-4">
+              {/* Render assignment mark table */}
               <AssignmentMarkTable />
             </div>
           </div>

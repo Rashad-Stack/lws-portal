@@ -25,8 +25,10 @@ export default function Form({ admin }) {
       initialValues,
       validationSchema: loginSchema,
       onSubmit(values, action) {
+        // Decide who is login
         admin ? adminLogin(values) : login(values);
 
+        // after successfully logged in, empty al form input
         if (loginSuccess) {
           action.resetForm();
         }

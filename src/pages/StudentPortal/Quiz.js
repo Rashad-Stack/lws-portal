@@ -51,7 +51,7 @@ export default function Quiz() {
           <ErrorMessage message="No quiz found!" />
         )}
 
-        {/* Rendering data */}
+        {/*Not error then Render */}
         {!isLoading && !isError && quiz[0]?.video_id && (
           <>
             <div className="mb-8">
@@ -63,7 +63,7 @@ export default function Quiz() {
 
             <form onSubmit={handleQuizSubmit}>
               <div className="space-y-8">
-                {/* Rendering quiz with component */}
+                {/* Rendering quiz component */}
                 {quizzes.map((quiz) => (
                   <Question key={quiz.id} quiz={quiz} />
                 ))}
@@ -75,6 +75,7 @@ export default function Quiz() {
           </>
         )}
       </div>
+      {/* Custom Modal */}
       <AppModal modalIsOpen={modalIsOpen}>
         <ActionAlert setIsOpen={setIsOpen} />
       </AppModal>

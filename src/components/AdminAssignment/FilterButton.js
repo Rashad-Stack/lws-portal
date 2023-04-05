@@ -16,10 +16,9 @@ export default function FilterButton() {
           <Loader />
         ) : (
           <>
-            Total <span>{assignmentMarks?.length}</span>
+            Total <span>{assignmentMarks?.length || 0}</span>
           </>
         )}
-        {!isLoading && isError && <ErrorMessage message="Error" />}
       </li>
       <li>
         {isLoading ? (
@@ -28,11 +27,11 @@ export default function FilterButton() {
           <>
             Pending{" "}
             <span>
-              {assignmentMarks?.filter((a) => a.status === "pending")?.length}
+              {assignmentMarks?.filter((a) => a.status === "pending")?.length ||
+                0}
             </span>
           </>
         )}
-        {!isLoading && isError && <ErrorMessage message="Error" />}
       </li>
       <li>
         {isLoading ? (
@@ -45,6 +44,7 @@ export default function FilterButton() {
             </span>
           </>
         )}
+        {/* Render error */}
         {!isLoading && isError && <ErrorMessage message="Error" />}
       </li>
     </ul>

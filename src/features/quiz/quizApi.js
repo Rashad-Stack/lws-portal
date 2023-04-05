@@ -167,7 +167,16 @@ const quizApi = apiSlice.injectEndpoints({
           }
         },
       }),
-
+      // Get all submitted query
+      getQuizMark: builder.query({
+        query() {
+          return {
+            url: "/quizMark",
+            method: "GET",
+          };
+        },
+      }),
+      // Quiz submit query
       postQuizMark: builder.mutation({
         query(data) {
           return {
@@ -178,17 +187,26 @@ const quizApi = apiSlice.injectEndpoints({
         },
 
         invalidatesTags: ["GetOneQuiz"],
-      }),
+        // Pessimistic Update
+        async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+          try {
+            const { data: SubmittedQuiz } = await queryFulfilled;
 
-      getQuizMark: builder.query({
-        query() {
-          return {
-            url: "/quizMark",
-            method: "GET",
-          };
+            dispatch(
+              apiSlice.util.updateQueryData(
+                "getQuizMark",
+                undefined,
+                (draft) => {
+                  draft.push(SubmittedQuiz);
+                }
+              )
+            );
+          } catch (err) {
+            // do nothing
+          }
         },
       }),
-
+      // Get one submitted query
       getOneQuizMark: builder.query({
         query({ courseId, studentId }) {
           return {

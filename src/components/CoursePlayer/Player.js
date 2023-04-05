@@ -27,29 +27,26 @@ export default function Player() {
       )}
       {!isLoading && !isError && video?.id && (
         // Rendering data throw component
-        <>
-          <div>
-            <ReactPlayer url={url} width="100%" height={480} controls={true} />
-          </div>
-          <div>
-            <h1 className="text-lg font-semibold tracking-tight text-slate-100">
-              {title}
-            </h1>
-            <h2 className=" pb-4 text-sm leading-[1.7142857] text-slate-400">
-              Uploaded on{" "}
-              {new Date(createdAt).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </h2>
-            <CourseActionButtons />
-            <p className="mt-4 text-sm text-slate-400 leading-6">
-              {description}
-            </p>
-          </div>
-        </>
+        <div>
+          <ReactPlayer url={url} width="100%" height={480} controls={true} />
+        </div>
       )}
+
+      <div>
+        <h1 className="text-lg font-semibold tracking-tight text-slate-100">
+          {title}
+        </h1>
+        <h2 className=" pb-4 text-sm leading-[1.7142857] text-slate-400">
+          Uploaded on{" "}
+          {new Date(createdAt).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </h2>
+        <CourseActionButtons />
+        <p className="mt-4 text-sm text-slate-400 leading-6">{description}</p>
+      </div>
     </div>
   );
 }

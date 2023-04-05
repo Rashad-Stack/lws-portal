@@ -15,26 +15,25 @@ export default function ActionAlert({ setIsOpen }) {
   const navigate = useNavigate();
 
   const submitQuiz = () => {
-    navigate(-1);
     postQuizMark(quizMark);
   };
 
   useEffect(() => {
     if (isSuccess) {
       setIsOpen(false);
+      navigate(-1);
     }
   }, [isSuccess]);
 
   return (
     <div className="flex justify-center items-center absolute top-0 right-0 bottom-0 left-0">
       <div className="bg-gray-800 px-16 py-14 rounded-md text-center">
+        <h1 className="text-xl mb-4 font-bold text-slate-100">
+          Do you want to Submit ?
+        </h1>
+
         {!isLoading && isError && (
           <ErrorMessage message="Something went wrong!" />
-        )}
-        {!isLoading && !isError && (
-          <h1 className="text-xl mb-4 font-bold text-slate-100">
-            Do you want to Submit ?
-          </h1>
         )}
         <button
           className="bg-red-500 px-4 py-2 rounded-md text-md text-white"

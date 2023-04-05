@@ -11,11 +11,13 @@ export default function Assignment() {
       <section className="py-6 bg-primary">
         <div className="mx-auto max-w-full px-5 lg:px-20">
           <div className="px-3 py-20 bg-opacity-10">
+            {/* Adding assignment */}
             <AddData
               modalTitle="Add Assignment"
               AddModal={AddAssignmentModal}
             />
             <div className="overflow-x-auto mt-4">
+              {/* Render table of assignment */}
               <AssignmentTable />
             </div>
           </div>

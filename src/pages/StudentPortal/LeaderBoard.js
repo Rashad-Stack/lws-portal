@@ -29,10 +29,7 @@ export default function LeaderBoard() {
         <OtherUsersLeaderBoard />
       </>
     );
-  } else {
-    console.log("else ok");
   }
-
   return (
     <Layout>
       <section className="py-6 bg-primary">
