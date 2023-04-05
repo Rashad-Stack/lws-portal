@@ -13,7 +13,7 @@ export const store = configureStore({
     quizzes: quizSlice,
     leaderBoard: leaderBoardSlice,
   },
-  devTools: process.env.NODE_ENV !== "production",
+  devTools: import.meta.env.MODE !== "production",
   middleware(getDefaultMiddleWares) {
     return getDefaultMiddleWares().concat(apiSlice.middleware);
   },
