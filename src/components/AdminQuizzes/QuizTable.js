@@ -17,7 +17,7 @@ export default function QuizTable() {
   } else if (!isLoading && isError) {
     content = <ErrorMessage message="Something went wrong" />;
   } else if (!isLoading && !isError && quizzes.length === 0) {
-    content = <ErrorMessage message="No Quizzes found!" />;
+    content = <ErrorMessage message="No Quiz added!" />;
   } else if (!isLoading && !isError && quizzes.length > 0) {
     content = (
       <table className="divide-y-1 text-base divide-gray-600 w-full">

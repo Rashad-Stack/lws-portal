@@ -18,7 +18,7 @@ export default function VideoTable() {
   } else if (!isLoading && isError) {
     content = <ErrorMessage message="Something went wrong" />;
   } else if (!isLoading && !isError && videos.length === 0) {
-    content = <ErrorMessage message="No videos found!" />;
+    content = <ErrorMessage message="No video added!" />;
   } else if (!isLoading && !isError && videos.length > 0) {
     content = (
       <table className="divide-y-1 text-base divide-gray-600 w-full">
