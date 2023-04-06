@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { authSelector, userLoggedOut } from "../../features/auth/authSlice";
 
 export default function Logout() {
@@ -12,11 +12,15 @@ export default function Logout() {
     navigate("/student/login");
   };
 
+  const { pathname } = useLocation();
+
+  // Decide When warn to log out
+  const warnLogout = user?.role === "admin" || pathname === "/quiz";
+
   // Deciding logout button for admin
-  const isAdmin =
-    user?.role === "admin"
-      ? "flex gap-2 items-center px-4 py-1 rounded-full text-sm transition-all bg-red-600 hover:bg-red-700 font-medium"
-      : "flex gap-2 border border-cyan items-center px-4 py-1 rounded-full text-sm transition-all hover:bg-cyan";
+  const isAdmin = warnLogout
+    ? "flex gap-2 items-center px-4 py-1 rounded-full text-sm transition-all bg-red-600 hover:bg-red-700 font-medium"
+    : "flex gap-2 border border-cyan items-center px-4 py-1 rounded-full text-sm transition-all hover:bg-cyan";
 
   return (
     <button className={isAdmin} onClick={handleLogout}>
