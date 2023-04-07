@@ -10,11 +10,10 @@ export default function VideoSelector({ title, setVideo, initialVideo = {} }) {
   const handleSetVideo = (e) => {
     // Restore string object from selected values
     setVideo(JSON.parse(e.target.value));
-    setSelectVideo(JSON.parse(e.target.value));
   };
 
   //   Destructuring Initial values for editing
-  const { initialVideoId } = initialVideo;
+  const { initialVideoTitle } = initialVideo;
 
   return (
     <div className="mb-4 w-full">
@@ -31,27 +30,18 @@ export default function VideoSelector({ title, setVideo, initialVideo = {} }) {
       {!isLoading && !isError && videos?.length > 0 && (
         <select
           className="w-full border text-sm rounded-md block p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
-          value={selectedVideo?.title}
           onChange={handleSetVideo}
         >
-          <option hidden>Select a video</option>
-          {videos.map((video) => {
-            let initialVideo = undefined;
-            // Checking initial values for editing
-            if (video.id === initialVideoId) {
-              initialVideo = video;
-            }
-
-            return (
-              <option
-                key={video?.id}
-                // Set object as string into value
-                value={JSON.stringify(initialVideo || video)}
-              >
-                {initialVideo?.title || video?.title}
-              </option>
-            );
-          })}
+          <option hidden>{initialVideoTitle || "Select a option"}</option>
+          {videos.map((video) => (
+            <option
+              key={video?.id}
+              // Set object as string into value
+              value={JSON.stringify(video)}
+            >
+              {video?.title}
+            </option>
+          ))}
         </select>
       )}
     </div>

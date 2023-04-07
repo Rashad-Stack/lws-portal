@@ -100,7 +100,9 @@ export default function AddQuizModal({
           />
           <VideoSelector
             title="Select assignment Related video"
-            initialVideo={isEditing ? { initialVideoId } : {}}
+            initialVideo={
+              isEditing ? { initialVideoId, initialVideoTitle } : {}
+            }
             setVideo={setVideo}
           />
           <div className="flex gap-5">

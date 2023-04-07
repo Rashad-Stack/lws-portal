@@ -27,7 +27,7 @@ export default function AssignmentTable() {
           {assignment.map((assignment) => (
             <TableRow
               key={assignment.id}
-              modalTitle="Update video"
+              modalTitle="Update assignment"
               tableData={assignment}
               id={assignment?.id}
               title={assignment?.title}

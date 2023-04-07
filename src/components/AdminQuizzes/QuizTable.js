@@ -27,7 +27,7 @@ export default function QuizTable() {
           {quizzes.map((quiz) => (
             <TableRow
               key={quiz.id}
-              modalTitle="Update video"
+              modalTitle="Update Quiz"
               tableData={quiz}
               id={quiz?.id}
               title={quiz?.question}
