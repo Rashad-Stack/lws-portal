@@ -30,7 +30,9 @@ export default function AddVideoModal({
   const [title, setTitle] = useState(initialTitle || "");
   const [description, setDescription] = useState(initialDescription || "");
   const [url, setUrl] = useState(initialUrl || "");
-  const [views, setViews] = useState(convertToNumber(initialViews) || "");
+  const [views, setViews] = useState(
+    initialViews ? convertToNumber(initialViews) : ""
+  );
   const [duration, setDuration] = useState(initialDuration || "");
 
   //   Resetting form

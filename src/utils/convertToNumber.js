@@ -1,11 +1,13 @@
 export const convertToNumber = (str) => {
-  let suffix = str.slice(-1);
-  let number = parseFloat(str.slice(0, -1));
-  if (suffix === "K") {
-    return number * 1000;
-  } else if (suffix === "M") {
-    return number * 1000000;
+  if (typeof str === "string") {
+    if (str.endsWith("K") || str.endsWith("k")) {
+      return parseFloat(str.slice(0, -1)) * 1000;
+    } else if (str.endsWith("M") || str.endsWith("m")) {
+      return parseFloat(str.slice(0, -1)) * 1000000;
+    } else {
+      return parseFloat(str);
+    }
   } else {
-    return parseFloat(str);
+    return str;
   }
 };
