@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import useVideoManage from "../../hooks/useVideoManage";
+import tc from "thousands-counter";
 
+import useVideoManage from "../../hooks/useVideoManage";
 import { ErrorMessage, InputBox, Loader } from "../ui";
+import { convertToNumber } from "../../utils";
 
 export default function AddVideoModal({
   modalTitle,
@@ -28,7 +30,7 @@ export default function AddVideoModal({
   const [title, setTitle] = useState(initialTitle || "");
   const [description, setDescription] = useState(initialDescription || "");
   const [url, setUrl] = useState(initialUrl || "");
-  const [views, setViews] = useState(initialViews || "");
+  const [views, setViews] = useState(convertToNumber(initialViews) || "");
   const [duration, setDuration] = useState(initialDuration || "");
 
   //   Resetting form
@@ -45,9 +47,21 @@ export default function AddVideoModal({
     isEditing
       ? editVideo({
           id,
-          data: { title, description, url, views: views + "k", duration },
+          data: {
+            title,
+            description,
+            url,
+            views: tc(views, { digits: 2 }),
+            duration,
+          },
         })
-      : addVideo({ title, description, url, views: views + "k", duration });
+      : addVideo({
+          title,
+          description,
+          url,
+          views: tc(views, { digits: 2 }),
+          duration,
+        });
   };
 
   useEffect(() => {
