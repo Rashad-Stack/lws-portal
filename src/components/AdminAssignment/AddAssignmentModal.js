@@ -16,12 +16,11 @@ export default function AddAssignmentModal({
     assignmentIsError,
     assignmentIsSuccess,
   } = useAssignmentManage();
-  const { initialTitle, initialVideoId, initialVideoTitle, initialTotalMark } =
+  const { initialTitle, initialTotalMark } =
     useAssignmentEditingState(tableData);
   const [title, setTitle] = useState(initialTitle || "");
   const [video, setVideo] = useState({});
   const [totalMark, setTotalMark] = useState(initialTotalMark || "");
-
   const resetForm = () => {
     setTitle("");
     setVideo("");
@@ -30,10 +29,11 @@ export default function AddAssignmentModal({
 
   const handleSubmitAssignment = (event) => {
     event.preventDefault();
+
     const data = {
       title,
       totalMark,
-      video_id: video?.id,
+      video_id: video?.id || tableData?.video_id,
       video_title: video?.title,
     };
 
@@ -65,9 +65,7 @@ export default function AddAssignmentModal({
           />
           <VideoSelector
             title="Select assignment Related video"
-            initialVideo={
-              isEditing ? { initialVideoId, initialVideoTitle } : {}
-            }
+            initialVideo={isEditing ? tableData : {}}
             setVideo={setVideo}
           />
 

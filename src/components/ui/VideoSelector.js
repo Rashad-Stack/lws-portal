@@ -11,9 +11,6 @@ export default function VideoSelector({ title, setVideo, initialVideo = {} }) {
     setVideo(JSON.parse(e.target.value));
   };
 
-  //   Destructuring Initial values for editing
-  const { initialVideoTitle } = initialVideo;
-
   return (
     <div className="mb-4 w-full">
       <label className="block text-gray-200 text-sm font-bold mb-2">
@@ -31,7 +28,7 @@ export default function VideoSelector({ title, setVideo, initialVideo = {} }) {
           className="w-full border text-sm rounded-md block p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
           onChange={handleSetVideo}
         >
-          <option hidden>{initialVideoTitle || "Select a video"}</option>
+          <option hidden>{initialVideo.video_title || "Select a video"}</option>
           {videos.map((video) => (
             <option
               key={video?.id}

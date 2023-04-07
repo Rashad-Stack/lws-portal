@@ -63,7 +63,7 @@ export default function AddQuizModal({
     event.preventDefault();
     const data = {
       question,
-      video_id: video?.id,
+      video_id: video?.id || tableData?.video_id,
       video_title: video?.title,
       option1,
       option1IsCorrect,
@@ -74,6 +74,7 @@ export default function AddQuizModal({
       option4,
       option4IsCorrect,
     };
+
     isEditing ? editQuiz({ id: tableData?.id, data }) : addQuizzes(data);
   };
 
@@ -100,9 +101,7 @@ export default function AddQuizModal({
           />
           <VideoSelector
             title="Select assignment Related video"
-            initialVideo={
-              isEditing ? { initialVideoId, initialVideoTitle } : {}
-            }
+            initialVideo={isEditing ? tableData : {}}
             setVideo={setVideo}
           />
           <div className="flex gap-5">
