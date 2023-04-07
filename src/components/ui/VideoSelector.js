@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useGetCoursesQuery } from "../../features/courses/coursesApi";
 import Loader from "./Loader";
 import ErrorMessage from "./ErrorMessage";
 
 export default function VideoSelector({ title, setVideo, initialVideo = {} }) {
   const { data: videos, isLoading, isError } = useGetCoursesQuery();
-  const [selectedVideo, setSelectVideo] = useState();
 
   const handleSetVideo = (e) => {
     // Restore string object from selected values
