@@ -31,7 +31,7 @@ export default function VideoSelector({ title, setVideo, initialVideo = {} }) {
           className="w-full border text-sm rounded-md block p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
           onChange={handleSetVideo}
         >
-          <option hidden>{initialVideoTitle || "Select a option"}</option>
+          <option hidden>{initialVideoTitle || "Select a video"}</option>
           {videos.map((video) => (
             <option
               key={video?.id}
