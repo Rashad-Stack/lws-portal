@@ -13,8 +13,6 @@ export default function AddQuizModal({
 }) {
   const {
     initialQuestion,
-    initialVideoId,
-    initialVideoTitle,
     initialOption1,
     initialOption1IsCorrect,
     initialOption2,
