@@ -6,7 +6,7 @@ import { useGetAssignmentMarkQuery } from "../../features/assignment/assignmentA
 
 export default function AssignmentMarkTable() {
   const {
-    data: assignmentMarks,
+    data: assignmentMark,
     isLoading,
     isError,
   } = useGetAssignmentMarkQuery();
@@ -22,17 +22,21 @@ export default function AssignmentMarkTable() {
   } else if (
     !assignmentMarkIsLoading &&
     !assignmentMarkIsError &&
-    assignmentMarks.length === 0
+    assignmentMark?.assignmentMark?.length === 0
   ) {
     content = <ErrorMessage message="No Quizzes found!" />;
-  } else if (!isLoading && !isError && assignmentMarks.length > 0) {
+  } else if (
+    !isLoading &&
+    !isError &&
+    assignmentMark?.assignmentMark?.length > 0
+  ) {
     content = (
       <table className="divide-y-1 text-base divide-gray-600 w-full">
         <AssignmentMarkTableHead />
         <tbody className="divide-y divide-slate-600/50">
-          {assignmentMarks.map((assignmentMark) => (
+          {assignmentMark?.assignmentMark?.map((assignmentMark) => (
             <AssignmentTableRow
-              key={assignmentMark.id}
+              key={assignmentMark._id}
               assignmentMark={assignmentMark}
             />
           ))}

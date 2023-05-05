@@ -20,18 +20,18 @@ export default function VideoSelector({ title, setVideo, initialVideo = {} }) {
       {!isLoading && isError && (
         <ErrorMessage message="Something went wrong!" />
       )}
-      {!isLoading && !isError && videos?.length === 0 && (
+      {!isLoading && !isError && videos?.videos?.length === 0 && (
         <ErrorMessage message="No related video found" />
       )}
-      {!isLoading && !isError && videos?.length > 0 && (
+      {!isLoading && !isError && videos?.videos?.length > 0 && (
         <select
           className="w-full border text-sm rounded-md block p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
           onChange={handleSetVideo}
         >
-          <option hidden>{initialVideo.video_title || "Select a video"}</option>
-          {videos.map((video) => (
+          <option hidden>{initialVideo.videoTitle || "Select a video"}</option>
+          {videos?.videos?.map((video) => (
             <option
-              key={video?.id}
+              key={video?._id}
               // Set object as string into value
               value={JSON.stringify(video)}
             >

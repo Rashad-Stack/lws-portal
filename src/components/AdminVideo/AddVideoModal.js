@@ -19,7 +19,7 @@ export default function AddVideoModal({
     videoManageIsSuccess,
   } = useVideoManage();
   const {
-    id,
+    _id,
     title: initialTitle,
     description: initialDescription,
     url: initialUrl,
@@ -48,7 +48,7 @@ export default function AddVideoModal({
     event.preventDefault();
     isEditing
       ? editVideo({
-          id,
+          id: _id,
           data: {
             title,
             description,

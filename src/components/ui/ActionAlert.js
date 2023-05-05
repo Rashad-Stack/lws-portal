@@ -15,6 +15,7 @@ export default function ActionAlert({ setIsOpen }) {
   const navigate = useNavigate();
 
   const submitQuiz = () => {
+    console.log(quizMark);
     postQuizMark(quizMark);
   };
 

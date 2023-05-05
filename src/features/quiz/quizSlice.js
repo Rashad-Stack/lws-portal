@@ -31,9 +31,9 @@ const quizSlice = createSlice({
       const { optionId, questionId, videoId } = action.payload;
 
       state.quizzes.forEach((quiz) => {
-        if (quiz.video_id === videoId && quiz.id === questionId) {
+        if (quiz.videoId === videoId && quiz._id === questionId) {
           quiz.options.forEach((option) => {
-            if (option.id * 1 === optionId * 1) {
+            if (option._id === optionId) {
               // toggled checked/unchecked
               option.checked = !option.checked;
             }
@@ -42,8 +42,8 @@ const quizSlice = createSlice({
       });
     },
     calculateQuizMark(state, action) {
-      const { quiz, user } = action.payload || {};
-      const { id, name } = user || {};
+      const { quiz } = action.payload || {};
+
       quiz.forEach((question, index1) => {
         let correctIndexes = [];
         let checkIndexes = [];
@@ -67,10 +67,8 @@ const quizSlice = createSlice({
 
       // Set calculated mark to state
       state.quizMark = {
-        student_id: id,
-        student_name: name,
-        video_id: quiz[0]?.video_id,
-        video_title: quiz[0]?.video_title,
+        videoId: quiz[0]?.videoId,
+        videoTitle: quiz[0]?.videoTitle,
         totalQuiz: quiz?.length,
         totalWrong: quiz.length - state.correctQuiz.length,
         totalCorrect: state.correctQuiz.length,

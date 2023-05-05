@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { setCourseId } from "../../features/courses/courseSlice";
 
 export default function ListItem({ course = {} }) {
-  const { id, title, views, duration } = course;
+  const { _id, title, views, duration } = course;
   const dispatch = useDispatch();
   const handlePlay = () => {
-    dispatch(setCourseId(id));
+    dispatch(setCourseId(_id));
   };
 
   return (

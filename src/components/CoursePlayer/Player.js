@@ -12,7 +12,7 @@ export default function Player() {
   const { courseId } = useSelector(courseIdSelector);
   const { data: video, isLoading, isError } = useGetVideoQuery(courseId);
 
-  const { title, description, url, createdAt } = video || {};
+  const { _id, title, description, url, createdAt } = video?.video || {};
 
   return (
     <div className="col-span-full w-full space-y-8 lg:col-span-2">
@@ -22,10 +22,10 @@ export default function Player() {
         <ErrorMessage message="Something went wrong!" />
       )}
 
-      {!isLoading && !isError && !video?.id && (
+      {!isLoading && !isError && !_id && (
         <ErrorMessage message="No video found!" />
       )}
-      {!isLoading && !isError && video?.id && (
+      {!isLoading && !isError && _id && (
         // Rendering data throw component
         <div>
           <ReactPlayer url={url} width="100%" height={480} controls={true} />

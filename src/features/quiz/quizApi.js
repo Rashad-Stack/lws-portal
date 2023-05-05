@@ -18,8 +18,8 @@ const quizApi = apiSlice.injectEndpoints({
         query(data = {}) {
           const {
             question,
-            video_id,
-            video_title,
+            videoId,
+            videoTitle,
             option1,
             option1IsCorrect,
             option2,
@@ -41,7 +41,7 @@ const quizApi = apiSlice.injectEndpoints({
           return {
             url: "/quizzes/",
             method: "POST",
-            body: { question, video_id, video_title, options },
+            body: { question, videoId, videoTitle, options },
           };
         },
 
@@ -55,7 +55,7 @@ const quizApi = apiSlice.injectEndpoints({
                 "getQuizzes",
                 undefined,
                 (draft) => {
-                  draft.push(createdQuiz);
+                  draft.quizzes.push(createdQuiz.quiz);
                 }
               )
             );
@@ -70,8 +70,8 @@ const quizApi = apiSlice.injectEndpoints({
         query({ id, data = {} }) {
           const {
             question,
-            video_id,
-            video_title,
+            videoId,
+            videoTitle,
             option1,
             option1IsCorrect,
             option2,
@@ -94,7 +94,7 @@ const quizApi = apiSlice.injectEndpoints({
           return {
             url: `/quizzes/${id}`,
             method: "PATCH",
-            body: { question, video_id, video_title, options },
+            body: { question, videoId, videoTitle, options },
           };
         },
         async onQueryStarted({ id }, { queryFulfilled, dispatch }) {
@@ -105,9 +105,9 @@ const quizApi = apiSlice.injectEndpoints({
                 "getQuizzes",
                 undefined,
                 (draft) => {
-                  if (updatedQuiz?.id) {
-                    const quizToUpdate = draft.find((q) => q.id == id);
-                    Object.assign(quizToUpdate, updatedQuiz);
+                  if (updatedQuiz?.quiz?._id) {
+                    const quizToUpdate = draft.quizzes.find((q) => q._id == id);
+                    Object.assign(quizToUpdate, updatedQuiz?.quiz);
                   }
                 }
               )
@@ -127,13 +127,13 @@ const quizApi = apiSlice.injectEndpoints({
         },
 
         // Optimistic delete
-        async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        async onQueryStarted(id, { queryFulfilled, dispatch }) {
           const deletePatch = dispatch(
             apiSlice.util.updateQueryData("getQuizzes", undefined, (draft) => {
-              const index = draft.findIndex((quiz) => quiz.id == arg);
+              const index = draft.quizzes.findIndex((quiz) => quiz._id == id);
               if (index != -1) {
                 // Remove the deleted quiz from the array
-                draft.splice(index, 1);
+                draft.quizzes.splice(index, 1);
               }
             })
           );
@@ -148,19 +148,19 @@ const quizApi = apiSlice.injectEndpoints({
 
       // Student portal section
       getQuiz: builder.query({
-        query(id) {
+        query(videoId) {
           return {
-            url: `/quizzes/?video_id=${id}`,
+            url: `/quizzes/?videoId=${videoId}`,
             method: "GET",
           };
         },
-        async onQueryStarted(id, { queryFulfilled, dispatch }) {
+        async onQueryStarted(videoId, { queryFulfilled, dispatch }) {
           try {
-            const result = await queryFulfilled;
+            const { data: result } = await queryFulfilled;
 
             // Dispatching result to quiz slice for modify data
-            if (result?.data) {
-              dispatch(addQuizzes(result.data));
+            if (result?.quizzes) {
+              dispatch(addQuizzes(result?.quizzes));
             }
           } catch (err) {
             // Do nothing
@@ -171,7 +171,7 @@ const quizApi = apiSlice.injectEndpoints({
       getQuizMark: builder.query({
         query() {
           return {
-            url: "/quizMark",
+            url: "/quizMarks",
             method: "GET",
           };
         },
@@ -180,7 +180,7 @@ const quizApi = apiSlice.injectEndpoints({
       postQuizMark: builder.mutation({
         query(data) {
           return {
-            url: "/quizMark",
+            url: "/quizMarks",
             method: "POST",
             body: data,
           };
@@ -208,9 +208,9 @@ const quizApi = apiSlice.injectEndpoints({
       }),
       // Get one submitted query
       getOneQuizMark: builder.query({
-        query({ courseId, studentId }) {
+        query(courseId) {
           return {
-            url: `/quizMark?student_id=${studentId}&video_id=${courseId}`,
+            url: `/quizMarks?videoId=${courseId}`,
             method: "GET",
           };
         },

@@ -17,9 +17,9 @@ export default function Question({ quiz = {} }) {
     // dispatch for setting selected option
     dispatch(
       answeredQuizzes({
-        optionId: option?.id,
-        questionId: quiz?.id,
-        videoId: quiz?.video_id,
+        optionId: option?._id,
+        questionId: quiz?._id,
+        videoId: quiz?.videoId,
       })
     );
   };
@@ -32,7 +32,7 @@ export default function Question({ quiz = {} }) {
         {options?.length > 0 ? (
           options.map((option) => (
             <Option
-              key={option.id}
+              key={option._id}
               handleOptionClick={() => handleOptionClick(option)}
               option={option}
             />

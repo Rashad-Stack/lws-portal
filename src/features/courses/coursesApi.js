@@ -1,4 +1,5 @@
 import apiSlice from "../api/apiSlice";
+import { setCourseId } from "./courseSlice";
 
 const coursesApi = apiSlice.injectEndpoints({
   endpoints(builder) {
@@ -10,6 +11,16 @@ const coursesApi = apiSlice.injectEndpoints({
             url: "/videos",
             method: "GET",
           };
+        },
+        async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+          try {
+            const { data: result } = await queryFulfilled;
+            if (result?.videos.length > 0) {
+              dispatch(setCourseId(result?.videos[0]._id));
+            }
+          } catch (err) {
+            // Do nothing
+          }
         },
       }),
 
@@ -26,12 +37,9 @@ const coursesApi = apiSlice.injectEndpoints({
       addVideo: builder.mutation({
         query(data) {
           return {
-            url: "videos",
+            url: "/videos",
             method: "POST",
-            body: {
-              ...data,
-              createdAt: new Date(Date.now()).toISOString(),
-            },
+            body: data,
           };
         },
 
@@ -45,7 +53,7 @@ const coursesApi = apiSlice.injectEndpoints({
                 "getCourses",
                 undefined,
                 (draft) => {
-                  draft.push(createdVideo);
+                  draft.videos.push(createdVideo.video);
                 }
               )
             );
@@ -71,9 +79,10 @@ const coursesApi = apiSlice.injectEndpoints({
                 "getCourses",
                 undefined,
                 (draft) => {
-                  if (updatedVideo?.id) {
-                    const videoToUpdate = draft.find((t) => t.id == id);
-                    Object.assign(videoToUpdate, updatedVideo);
+                  if (updatedVideo?.video?._id) {
+                    const videoToUpdate = draft.videos.find((t) => t._id == id);
+
+                    Object.assign(videoToUpdate, updatedVideo?.video);
                   }
                 }
               )
@@ -96,9 +105,9 @@ const coursesApi = apiSlice.injectEndpoints({
         async onQueryStarted(arg, { queryFulfilled, dispatch }) {
           const deletePatch = dispatch(
             apiSlice.util.updateQueryData("getCourses", undefined, (draft) => {
-              const index = draft.findIndex((video) => video.id == arg);
+              const index = draft.videos.findIndex((video) => video._id == arg);
               if (index != -1) {
-                draft.splice(index, 1);
+                draft.videos.splice(index, 1);
               }
             })
           );

@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
-import { authSelector } from "../../features/auth/authSlice";
 import { ErrorMessage, Loader } from "../ui";
 import { usePostAssignmentMarkMutation } from "../../features/assignment/assignmentApi";
 import useQuizAndAssignment from "../../hooks/useQuizAndAssignment";
 
 export default function AssignmentModal({ setIsOpen }) {
-  const { user } = useSelector(authSelector);
   const { assignment } = useQuizAndAssignment();
 
   const [postAssignmentMark, { isLoading, isError, isSuccess }] =
@@ -18,14 +15,12 @@ export default function AssignmentModal({ setIsOpen }) {
   const handleSubmitAssignment = (event) => {
     event.preventDefault();
 
-    if (assignment?.length > 0 && assignment[0]?.video_id) {
+    if (assignment?.length > 0 && assignment[0]?.videoId) {
       postAssignmentMark({
-        student_id: user?.id,
-        student_name: user?.name,
-        assignment_id: assignment[0]?.video_id,
+        assignmentId: assignment[0]?.videoId,
         title: assignment[0]?.title,
         totalMark: assignment[0]?.totalMark,
-        repo_link: repositoryLink,
+        repoLink: repositoryLink,
       });
     }
   };
@@ -52,7 +47,7 @@ export default function AssignmentModal({ setIsOpen }) {
             <Loader />
           ) : (
             assignment?.length > 0 &&
-            assignment[0]?.video_id &&
+            assignment[0]?.videoId &&
             assignment[0]?.title
           )}
         </h1>

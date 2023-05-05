@@ -14,8 +14,7 @@ export default function RegistrationForm() {
       initialValues,
       validationSchema: registerSchema,
       onSubmit(values, action) {
-        const { name, email, password } = values;
-        register({ name, email, password });
+        register(values);
         if (isSuccess) {
           action.resetForm();
         }
@@ -80,12 +79,12 @@ export default function RegistrationForm() {
           </label>
           <input
             id="confirm-password"
-            name="confirm_password"
+            name="confirmPassword"
             type="password"
-            autoComplete="confirm-password"
+            autoComplete="confirmPassword"
             className="login-input rounded-b-md"
             placeholder="Confirm Password"
-            value={values.confirm_password}
+            value={values.confirmPassword}
             onChange={handleChange}
             onBlur={handleBlur}
           />
@@ -101,11 +100,13 @@ export default function RegistrationForm() {
         {errors?.password && touched?.password && (
           <ErrorMessage message={errors.password} />
         )}
-        {errors?.confirm_password && touched?.confirm_password && (
-          <ErrorMessage message={errors.confirm_password} />
+        {errors?.confirmPassword && touched?.confirmPassword && (
+          <ErrorMessage message={errors.confirmPassword} />
         )}
         {isError && (
-          <ErrorMessage message={error?.data || "Failed to register!"} />
+          <ErrorMessage
+            message={error?.data.message || "Failed to register!"}
+          />
         )}
 
         <Button title="Create Account" loading={isLoading} />

@@ -1,19 +1,20 @@
 import { userLoggedIn } from "../features/auth/authSlice";
 
 export const setToLocal = (data, dispatch) => {
+  console.log("🚀 ~ file: setJwtLocal.js:4 ~ setToLocal ~ data:", data.token);
   if (data) {
-    const { accessToken, user } = data;
+    const { token, user } = data;
     localStorage.setItem(
       "auth",
       JSON.stringify({
-        jwt: accessToken,
         user,
+        jwt: token,
       })
     );
     dispatch(
       userLoggedIn({
-        jwt: accessToken,
         user,
+        jwt: token,
       })
     );
   }

@@ -4,7 +4,7 @@ import { ErrorMessage, Loader } from "../ui";
 
 export default function FilterButton() {
   const {
-    data: assignmentMarks,
+    data: assignmentMark,
     isLoading,
     isError,
   } = useGetAssignmentMarkQuery();
@@ -16,7 +16,7 @@ export default function FilterButton() {
           <Loader />
         ) : (
           <>
-            Total <span>{assignmentMarks?.length || 0}</span>
+            Total <span>{assignmentMark?.assignmentMark?.length || 0}</span>
           </>
         )}
       </li>
@@ -27,8 +27,9 @@ export default function FilterButton() {
           <>
             Pending{" "}
             <span>
-              {assignmentMarks?.filter((a) => a.status === "pending")?.length ||
-                0}
+              {assignmentMark?.assignmentMark?.filter(
+                (a) => a.status === "pending"
+              )?.length || 0}
             </span>
           </>
         )}
@@ -40,7 +41,11 @@ export default function FilterButton() {
           <>
             Mark Sent{" "}
             <span>
-              {assignmentMarks?.filter((a) => a.status === "published")?.length}
+              {
+                assignmentMark?.assignmentMark?.filter(
+                  (a) => a.status === "published"
+                )?.length
+              }
             </span>
           </>
         )}

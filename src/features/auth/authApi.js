@@ -9,7 +9,7 @@ export const authApi = apiSlice.injectEndpoints({
       login: builder.mutation({
         query(data) {
           return {
-            url: "/login",
+            url: "/users/login",
             method: "POST",
             body: data,
           };
@@ -32,9 +32,9 @@ export const authApi = apiSlice.injectEndpoints({
       register: builder.mutation({
         query(data) {
           return {
-            url: "/users",
+            url: "/users/signup",
             method: "POST",
-            body: { ...data, role: "student" },
+            body: data,
           };
         },
         async onQueryStarted(data, { queryFulfilled, dispatch }) {
@@ -52,7 +52,7 @@ export const authApi = apiSlice.injectEndpoints({
       adminLogin: builder.mutation({
         query(data) {
           return {
-            url: "/login",
+            url: "/users/login",
             method: "POST",
             body: data,
           };

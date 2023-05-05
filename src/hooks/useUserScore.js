@@ -17,15 +17,21 @@ export default function useUserScore() {
   const dispatch = useDispatch();
   useEffect(() => {
     if (!isError && !assignmentIsLoading) {
-      dispatch(getCurrentUserScore({ user, quizMark, assignmentMark }));
+      dispatch(
+        getCurrentUserScore({
+          user,
+          quizMark: quizMark?.quizMark,
+          assignmentMark: assignmentMark?.assignmentMark,
+        })
+      );
     }
   }, [dispatch, assignmentIsLoading]);
 
   return {
     loading: isLoading || assignmentIsLoading,
     error: (!isLoading && !assignmentIsLoading && isError) || assignmentIsError,
-    isAssignment: assignmentMark?.length > 0,
-    isQuiz: quizMark?.length > 0,
+    isAssignment: assignmentMark?.assignmentMark?.length > 0,
+    isQuiz: quizMark?.quizMark?.length > 0,
     user,
   };
 }

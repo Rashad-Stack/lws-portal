@@ -63,8 +63,8 @@ const leaderBoardSlice = createSlice({
 
         // set calculated marks to the state
         state.otherUsersScore.push({
-          name: marks[0]?.student_name,
-          studentId: marks[0]?.student_id,
+          name: marks[0]?.studentName,
+          studentId: marks[0]?.studentId,
           totalQuizMark: totalQuizMark,
           totalAssignmentMark: totalAssignmentMark,
           totalMark: totalQuizMark + totalAssignmentMark,

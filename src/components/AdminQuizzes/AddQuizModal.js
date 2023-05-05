@@ -41,8 +41,14 @@ export default function AddQuizModal({
   const [option4IsCorrect, setOPtion4IsCorrect] = useState(
     initialOption4IsCorrect || false
   );
-  const { addQuizzes, editQuiz, quizIsLoading, quizIsError, quizIsSuccess } =
-    useQuizManage();
+  const {
+    addQuizzes,
+    editQuiz,
+    quizIsLoading,
+    quizIsError,
+    error,
+    quizIsSuccess,
+  } = useQuizManage();
 
   const resetForm = () => {
     setQuestion("");
@@ -61,8 +67,8 @@ export default function AddQuizModal({
     event.preventDefault();
     const data = {
       question,
-      video_id: video?.id || tableData?.video_id,
-      video_title: video?.title,
+      videoId: video?._id || tableData?.videoId,
+      videoTitle: video?.title,
       option1,
       option1IsCorrect,
       option2,
@@ -73,7 +79,7 @@ export default function AddQuizModal({
       option4IsCorrect,
     };
 
-    isEditing ? editQuiz({ id: tableData?.id, data }) : addQuizzes(data);
+    isEditing ? editQuiz({ id: tableData?._id, data }) : addQuizzes(data);
   };
 
   useEffect(() => {
@@ -157,7 +163,9 @@ export default function AddQuizModal({
         {!quizIsLoading && quizIsError && (
           <ErrorMessage
             message={
-              isEditing ? "Failed to update quiz!" : "Failed to add quiz!"
+              isEditing
+                ? error?.data?.message || "Failed to update quiz!"
+                : error?.data?.message || "Failed to add quiz!"
             }
           />
         )}

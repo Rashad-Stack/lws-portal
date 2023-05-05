@@ -1,14 +1,38 @@
 import { useSelector } from "react-redux";
-import { useGetOneAssignmentQuery } from "../features/assignment/assignmentApi";
+import {
+  useGetOneAssignmentMarkQuery,
+  useGetOneAssignmentQuery,
+} from "../features/assignment/assignmentApi";
 import { courseIdSelector } from "../features/courses/courseSlice";
-import { useGetQuizQuery } from "../features/quiz/quizApi";
+import {
+  useGetOneQuizMarkQuery,
+  useGetQuizQuery,
+} from "../features/quiz/quizApi";
 
 export default function useQuizAndAssignment() {
   const { courseId } = useSelector(courseIdSelector);
+  const { data: quizMark } = useGetOneQuizMarkQuery(courseId);
 
-  const { data: quiz, isLoading, isError } = useGetQuizQuery(courseId);
+  const { data: quizzes, isLoading, isError } = useGetQuizQuery(courseId);
   const { data: assignment } = useGetOneAssignmentQuery(courseId);
-  const isHasQuiz = quiz?.length > 0 ? true : false;
-  const isHasAssignment = assignment?.length > 0 ? true : false;
-  return { quiz, assignment, isHasQuiz, isHasAssignment, isLoading, isError };
+  const { data: assignmentMark } = useGetOneAssignmentMarkQuery(courseId);
+
+  const isHasQuiz = quizzes?.quizzes?.length > 0 ? true : false;
+  const isHasAssignment = assignment?.assignments?.length > 0 ? true : false;
+  const quizzesSubmitted =
+    quizMark?.quizMark?.length > 0 && quizMark?.quizMark[0].published
+      ? true
+      : false;
+
+  return {
+    quiz: quizzes?.quizzes,
+    quizMark,
+    assignment: assignment?.assignments,
+    assignmentMark: assignmentMark?.assignmentMark,
+    isHasQuiz,
+    quizzesSubmitted,
+    isHasAssignment,
+    isLoading,
+    isError,
+  };
 }

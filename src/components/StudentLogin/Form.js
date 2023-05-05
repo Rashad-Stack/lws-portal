@@ -98,7 +98,9 @@ export default function Form({ admin }) {
           <ErrorMessage message={errors.password} />
         )}
         {loginIsError && (
-          <ErrorMessage message={loginError?.data || "Failed to login!"} />
+          <ErrorMessage
+            message={loginError?.data.message || "Failed to login!"}
+          />
         )}
         {isLoginError && (
           <ErrorMessage

@@ -6,16 +6,16 @@ const assignmentApi = apiSlice.injectEndpoints({
       getAssignmentMark: builder.query({
         query() {
           return {
-            url: "/assignmentMark",
+            url: "/assignmentsMarks",
             method: "GET",
           };
         },
       }),
 
       getOneAssignmentMark: builder.query({
-        query({ courseId, studentId }) {
+        query(courseId) {
           return {
-            url: `/assignmentMark?assignment_id=${courseId}&student_id=${studentId}`,
+            url: `/assignmentsMarks?assignmentId=${courseId}`,
             method: "GET",
           };
         },
@@ -25,23 +25,56 @@ const assignmentApi = apiSlice.injectEndpoints({
       postAssignmentMark: builder.mutation({
         query(data) {
           return {
-            url: "/assignmentMark",
+            url: "/assignmentsMarks",
             method: "POST",
             body: {
               ...data,
-              mark: 0,
               status: "pending",
-              createdAt: new Date(Date.now()).toISOString(),
             },
           };
         },
         invalidatesTags: ["GetOneAssignment"],
       }),
 
+      editAssignmentMark: builder.mutation({
+        query({ id, data }) {
+          return {
+            url: `/assignmentsMarks/${id}`,
+            method: "PATCH",
+            body: {
+              mark: data,
+              status: "published",
+            },
+          };
+        },
+
+        // Optimistic update
+        async onQueryStarted({ id, data }, { queryFulfilled, dispatch }) {
+          const updatePatch = dispatch(
+            apiSlice.util.updateQueryData(
+              "getAssignmentMark",
+              undefined,
+              (draft) => {
+                const assignmentMarkToUpdate = draft.assignmentMark.find(
+                  (a) => a._id == id
+                );
+                assignmentMarkToUpdate.status = "published";
+                assignmentMarkToUpdate.mark = data;
+              }
+            )
+          );
+          try {
+            await queryFulfilled;
+          } catch (err) {
+            updatePatch.undo();
+          }
+        },
+      }),
+
       getOneAssignment: builder.query({
         query(videoId) {
           return {
-            url: `/assignments?video_id=${videoId}`,
+            url: `/assignments?videoId=${videoId}`,
             method: "GET",
           };
         },
@@ -62,11 +95,7 @@ const assignmentApi = apiSlice.injectEndpoints({
           return {
             url: "/assignments",
             method: "POST",
-            body: {
-              ...data,
-              totalMark: data.totalMark * 1,
-              video_id: data.video_id * 1,
-            },
+            body: data,
           };
         },
 
@@ -80,7 +109,7 @@ const assignmentApi = apiSlice.injectEndpoints({
                 "getAssignment",
                 undefined,
                 (draft) => {
-                  draft.push(createdAssignment);
+                  draft?.assignments?.push(createdAssignment.assignment);
                 }
               )
             );
@@ -95,11 +124,7 @@ const assignmentApi = apiSlice.injectEndpoints({
           return {
             url: `/assignments/${id}`,
             method: "PATCH",
-            body: {
-              ...data,
-              totalMark: data.totalMark * 1,
-              video_id: data.video_id * 1,
-            },
+            body: data,
           };
         },
         async onQueryStarted({ id }, { queryFulfilled, dispatch }) {
@@ -110,47 +135,20 @@ const assignmentApi = apiSlice.injectEndpoints({
                 "getAssignment",
                 undefined,
                 (draft) => {
-                  if (updatedAssignment?.id) {
-                    const assignmentToUpdate = draft.find((a) => a.id == id);
-                    Object.assign(assignmentToUpdate, updatedAssignment);
+                  if (updatedAssignment?.assignment?._id) {
+                    const assignmentToUpdate = draft?.assignments?.find(
+                      (a) => a._id == id
+                    );
+                    Object.assign(
+                      assignmentToUpdate,
+                      updatedAssignment?.assignment
+                    );
                   }
                 }
               )
             );
           } catch (err) {
             // Do nothing
-          }
-        },
-      }),
-
-      editAssignmentMark: builder.mutation({
-        query({ id, data }) {
-          return {
-            url: `/assignmentMark/${id}`,
-            method: "PATCH",
-            body: {
-              mark: data * 1,
-              status: "published",
-            },
-          };
-        },
-        // Optimistic update
-        async onQueryStarted({ id, data }, { queryFulfilled, dispatch }) {
-          const updatePatch = dispatch(
-            apiSlice.util.updateQueryData(
-              "getAssignmentMark",
-              undefined,
-              (draft) => {
-                const assignmentMarkToUpdate = draft.find((a) => a.id == id);
-                assignmentMarkToUpdate.status = "published";
-                assignmentMarkToUpdate.mark = data;
-              }
-            )
-          );
-          try {
-            await queryFulfilled;
-          } catch (err) {
-            updatePatch.undo();
           }
         },
       }),
@@ -163,18 +161,18 @@ const assignmentApi = apiSlice.injectEndpoints({
           };
         },
         // Optimistic delete
-        async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        async onQueryStarted(id, { queryFulfilled, dispatch }) {
           const deletePatch = dispatch(
             apiSlice.util.updateQueryData(
               "getAssignment",
               undefined,
               (draft) => {
-                const index = draft.findIndex(
-                  (assignment) => assignment.id == arg
+                const index = draft.assignments.findIndex(
+                  (assignment) => assignment._id == id
                 );
                 if (index != -1) {
                   // Remove the deleted quiz from the array
-                  draft.splice(index, 1);
+                  draft.assignments.splice(index, 1);
                 }
               }
             )

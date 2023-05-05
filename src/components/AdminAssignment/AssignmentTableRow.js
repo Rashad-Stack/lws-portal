@@ -4,12 +4,12 @@ import { Loader } from "../ui";
 
 export default function AssignmentTableRow({ assignmentMark = {} }) {
   const {
-    id,
+    _id,
     title,
     createdAt,
-    repo_link,
+    repoLink,
     status,
-    student_name,
+    studentName,
     totalMark,
     mark: initialMark,
   } = assignmentMark;
@@ -27,28 +27,30 @@ export default function AssignmentTableRow({ assignmentMark = {} }) {
     hour12: true,
   });
 
-  const setMarkHandler = () => {
-    editAssignmentMark({ id, data: mark });
+  const setMarkHandler = (event) => {
+    event.preventDefault();
+    editAssignmentMark({ id: _id, data: mark });
   };
 
   return (
     <tr>
       <td className="table-td">{title}</td>
       <td className="table-td">{createdDate}</td>
-      <td className="table-td">{student_name}</td>
-      <td className="table-td">{repo_link}</td>
+      <td className="table-td">{studentName}</td>
+      <td className="table-td">{repoLink}</td>
       <td className="table-td input-mark">
         {status === "published" ? (
           initialMark
         ) : (
-          <>
+          <form onSubmit={setMarkHandler}>
             <input
-              max="100"
+              type="number"
+              max={totalMark}
               value={mark}
               onChange={(e) => setMark(e.target.value)}
             />
 
-            <button disabled={isLoading} onClick={setMarkHandler}>
+            <button disabled={isLoading}>
               {isLoading ? (
                 <Loader />
               ) : (
@@ -67,7 +69,7 @@ export default function AssignmentTableRow({ assignmentMark = {} }) {
                 </svg>
               )}
             </button>
-          </>
+          </form>
         )}
       </td>
     </tr>

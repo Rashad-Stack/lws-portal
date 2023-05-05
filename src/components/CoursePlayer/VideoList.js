@@ -14,11 +14,11 @@ export default function VideoList() {
     content = <Loader />;
   } else if (!isLoading && isError) {
     content = <ErrorMessage message="Something went wrong!" />;
-  } else if (!isLoading && !isError && courses.length === 0) {
+  } else if (!isLoading && !isError && courses.videos.length === 0) {
     content = <ErrorMessage message="No Courser Found!" />;
-  } else if (!isLoading && !isError && courses.length > 0) {
-    content = courses.map((course) => (
-      <ListItem key={course.id} course={course} />
+  } else if (!isLoading && !isError && courses.videos.length > 0) {
+    content = courses?.videos.map((course) => (
+      <ListItem key={course._id} course={course} />
     ));
   }
 

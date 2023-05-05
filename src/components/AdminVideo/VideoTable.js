@@ -17,20 +17,20 @@ export default function VideoTable() {
     content = <Loader />;
   } else if (!isLoading && isError) {
     content = <ErrorMessage message="Something went wrong" />;
-  } else if (!isLoading && !isError && videos.length === 0) {
+  } else if (!isLoading && !isError && videos?.videos?.length === 0) {
     content = <ErrorMessage message="No video added!" />;
-  } else if (!isLoading && !isError && videos.length > 0) {
+  } else if (!isLoading && !isError && videos?.videos?.length > 0) {
     content = (
       <table className="divide-y-1 text-base divide-gray-600 w-full">
         <TableHead headerTitle="Video Title" headerDescription="Description" />
 
         <tbody className="divide-y divide-slate-600/50">
-          {videos.map((video) => (
+          {videos?.videos?.map((video) => (
             <TableRow
-              key={video.id}
+              key={video._id}
               modalTitle="Update video"
               tableData={video}
-              id={video?.id}
+              id={video?._id}
               title={video?.title}
               description={video?.description}
               ActionModal={AddVideoModal}

@@ -32,13 +32,13 @@ export default function AddAssignmentModal({
 
     const data = {
       title,
-      totalMark,
-      video_id: video?.id || tableData?.video_id,
-      video_title: video?.title,
+      totalMark: totalMark * 1,
+      videoId: video?._id || tableData?.videoId,
+      videoTitle: video?.title,
     };
 
     isEditing
-      ? editAssignment({ id: tableData?.id, data })
+      ? editAssignment({ id: tableData?._id, data })
       : addAssignment(data);
   };
 
