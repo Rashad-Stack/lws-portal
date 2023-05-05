@@ -10,7 +10,7 @@ function CurrentUserTable() {
   const { user } = useSelector(authSelector);
   const { currentUserScore } = useSelector(leaderBoardScoreSelector);
   const { name, rank, totalQuizMark, totalAssignmentMark, totalMark } =
-    currentUserScore;
+    currentUserScore || {};
 
   return (
     <div>
