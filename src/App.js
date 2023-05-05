@@ -6,7 +6,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import AuthLoading from "./components/ui/authLoading";
+import { AuthLoading } from "./components/ui/";
 import { authSelector } from "./features/auth/authSlice";
 import useAuthCheck from "./hooks/useAuthCheck";
 import {
