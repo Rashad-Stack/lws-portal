@@ -92,20 +92,20 @@ export default function RegistrationForm() {
       </div>
       <div>
         {errors?.name && touched?.name && (
-          <ErrorMessage message={errors.name} />
+          <ErrorMessage message={errors?.name} />
         )}
         {errors?.email && touched?.email && (
-          <ErrorMessage message={errors.email} />
+          <ErrorMessage message={errors?.email} />
         )}
         {errors?.password && touched?.password && (
-          <ErrorMessage message={errors.password} />
+          <ErrorMessage message={errors?.password} />
         )}
         {errors?.confirmPassword && touched?.confirmPassword && (
-          <ErrorMessage message={errors.confirmPassword} />
+          <ErrorMessage message={errors?.confirmPassword} />
         )}
         {isError && (
           <ErrorMessage
-            message={error?.data.message || "Failed to register!"}
+            message={error?.data?.message || "Failed to register!"}
           />
         )}
 

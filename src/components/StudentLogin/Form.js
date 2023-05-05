@@ -92,14 +92,14 @@ export default function Form({ admin }) {
       </div>
       <div>
         {errors?.email && touched?.email && (
-          <ErrorMessage message={errors.email} />
+          <ErrorMessage message={errors?.email} />
         )}
         {errors?.password && touched?.password && (
-          <ErrorMessage message={errors.password} />
+          <ErrorMessage message={errors?.password} />
         )}
         {loginIsError && (
           <ErrorMessage
-            message={loginError?.data.message || "Failed to login!"}
+            message={loginError?.data?.message || "Failed to login!"}
           />
         )}
         {isLoginError && (
