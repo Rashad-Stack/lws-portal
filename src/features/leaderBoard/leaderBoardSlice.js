@@ -34,7 +34,7 @@ const leaderBoardSlice = createSlice({
       // assembling quiz mark of each student
       if (state.quizScore?.length > 0) {
         state.quizScore.forEach((mark) => {
-          const studentId = mark.student_id;
+          const studentId = mark.studentId;
           if (!studentQuizData[studentId]) {
             studentQuizData[studentId] = [];
           }

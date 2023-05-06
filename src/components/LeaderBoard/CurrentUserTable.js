@@ -11,6 +11,10 @@ function CurrentUserTable() {
   const { currentUserScore } = useSelector(leaderBoardScoreSelector);
   const { name, rank, totalQuizMark, totalAssignmentMark, totalMark } =
     currentUserScore || {};
+  console.log(
+    "🚀 ~ file: CurrentUserTable.js:14 ~ CurrentUserTable ~ currentUserScore:",
+    currentUserScore
+  );
 
   return (
     <div>
