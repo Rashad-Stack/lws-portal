@@ -11,11 +11,6 @@ function CurrentUserTable() {
   const { currentUserScore } = useSelector(leaderBoardScoreSelector);
   const { name, rank, totalQuizMark, totalAssignmentMark, totalMark } =
     currentUserScore || {};
-  console.log(
-    "🚀 ~ file: CurrentUserTable.js:14 ~ CurrentUserTable ~ currentUserScore:",
-    currentUserScore
-  );
-
   return (
     <div>
       <h3 className="text-lg font-bold">Your Position in Leaderboard</h3>

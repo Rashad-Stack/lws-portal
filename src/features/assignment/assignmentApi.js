@@ -15,7 +15,7 @@ const assignmentApi = apiSlice.injectEndpoints({
       getOneAssignmentMark: builder.query({
         query(courseId) {
           return {
-            url: `/assignmentsMarks?assignmentId=${courseId}`,
+            url: `/assignmentsMarks?videoId=${courseId}`,
             method: "GET",
           };
         },

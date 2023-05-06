@@ -14,14 +14,15 @@ export default function AssignmentModal({ setIsOpen }) {
 
   const handleSubmitAssignment = (event) => {
     event.preventDefault();
+    const data = {
+      assignmentId: assignment[0]?.videoId,
+      title: assignment[0]?.title,
+      totalMark: assignment[0]?.totalMark,
+      repoLink: repositoryLink,
+    };
 
     if (assignment?.length > 0 && assignment[0]?.videoId) {
-      postAssignmentMark({
-        assignmentId: assignment[0]?.videoId,
-        title: assignment[0]?.title,
-        totalMark: assignment[0]?.totalMark,
-        repoLink: repositoryLink,
-      });
+      postAssignmentMark(data);
     }
   };
 
