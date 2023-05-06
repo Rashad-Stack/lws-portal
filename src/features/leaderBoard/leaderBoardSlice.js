@@ -23,7 +23,7 @@ const leaderBoardSlice = createSlice({
       // assembling assignment mark of each student
       if (state.assignmentMark?.length > 0) {
         state.assignmentMark.forEach((mark) => {
-          const studentId = mark.student_id;
+          const studentId = mark.studentId;
           if (!studentAssignmentData[studentId]) {
             studentAssignmentData[studentId] = [];
           }
